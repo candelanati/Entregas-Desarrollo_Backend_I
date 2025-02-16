@@ -9,8 +9,6 @@ class ProductsManager{
         if(fs.existsSync(this.path)){
             return JSON.parse(await fs.promises.readFile(this.path, "utf-8"))
         }else{
-
-            // throw new Error(`${this.path} not found...!!! :(`)
             return []
         }
     }
