@@ -1,0 +1,18 @@
+[
+    {
+        "id":1,
+        "products":[
+            {
+                "id":1,
+                "title":"titulo",
+                "description": "descripcion aaaaa aa a",
+                "code": 28939,
+                "price":10000,
+                "status":true,
+                "stock":10,
+                "category":"no se",
+                "thumbnails":["ruta","ruta"]
+            }
+        ]
+    }
+]

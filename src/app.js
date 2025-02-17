@@ -31,6 +31,8 @@ app.get("/api/products", async(req,res)=>{
 	res.json(products)
 })
 
+
+
 //inicializacion del servidor
 app.listen(PORT, ()=>{
 	console.log('servidor corriendo en el puerto '+PORT)

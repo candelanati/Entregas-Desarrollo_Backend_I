@@ -59,6 +59,8 @@ class ProductsManager{
         }
 
         products.push(newProduct)
+        await fs.promises.writeFile(this.path, JSON.stringify(products, null, "\t"))
+        return newProduct
     }
 
 }
