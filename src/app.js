@@ -1,6 +1,8 @@
 const express = require('express')
 const { ProductsManager}=require("./dao/productsManager.js")
+const {CartManager}=require("./dao/cartManager.js")
 
+const cartManager = new CartManager("./data/cart.json")
 const productManager=new ProductsManager("./data/products.json")
 
 const app = express()
@@ -31,6 +33,12 @@ app.get("/api/products", async(req,res)=>{
 	res.json(products)
 })
 
+app.get("/api/carts", async(req,res)=>{
+
+	let cart=await cartManager.getCart()
+
+	res.json(cart)
+})
 
 
 //inicializacion del servidor
