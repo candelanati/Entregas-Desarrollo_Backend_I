@@ -31,20 +31,31 @@ app.get("/api/products", async(req,res)=>{
 	res.status(200).json(products)
 })
 
-app.get("/api/carts", async(req,res)=>{
-	let cart=await cartManager.getCart()
-	res.json(cart)
-})
-
 app.get("/api/products/:pid",async(req,res)=>{
-    let {pid}=req.params
     let products=await productManager.getProducts()
+    let {pid}=req.params
     //validaciones
     let producto=products.find(p=>p.id==pid)
     if(!producto){
         return res.status(404).send({error:'no existen productos con id: '+pid})
     }
-    res.status(200).send(producto)
+    res.status(200).json(producto)
+})
+
+app.get("/api/carts", async(req,res)=>{
+	let carts=await cartManager.getCart()
+	res.status(200).json(carts)
+})
+
+app.get("/api/carts/:cid",async(req,res)=>{
+    let carts=await cartManager.getCart()
+    let {cid}=req.params
+    //validaciones
+    let cart=carts.find(c=>c.id==cid)
+    if(!cart){
+        return res.status(404).send({error:'no existen carritos con id: '+cid})
+    }
+    res.status(200).json(cart)
 })
 
 //inicializacion del servidor
