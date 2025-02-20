@@ -1,17 +1,81 @@
 [
     {
-        "id":1,
-        "products":[
+        "id": 1,
+        "products": [
             {
-                "id":1,
-                "title":"titulo",
-                "description": "descripcion aaaaa aa a",
-                "code": 28939,
-                "price":10000,
-                "status":true,
-                "stock":10,
-                "category":"no se",
-                "thumbnails":["ruta","ruta"]
+                "id": 3,
+                "title": "Producto C",
+                "description": "Descripción del producto C",
+                "code": 10003,
+                "price": 7500,
+                "status": true,
+                "stock": 15,
+                "category": "Deportes",
+                "thumbnails": ["ruta/c1.jpg", "ruta/c2.jpg"]
+            }
+        ]
+    },
+    {
+        "id": 2,
+        "products": [
+            {
+                "id": 5,
+                "title": "Producto E",
+                "description": "Descripción del producto E",
+                "code": 10005,
+                "price": 9500,
+                "status": true,
+                "stock": 30,
+                "category": "Juguetes",
+                "thumbnails": ["ruta/e1.jpg", "ruta/e2.jpg"]
+            }
+        ]
+    },
+    {
+        "id": 3,
+        "products": [
+            {
+                "id": 7,
+                "title": "Producto G",
+                "description": "Descripción del producto G",
+                "code": 10007,
+                "price": 5000,
+                "status": false,
+                "stock": 0,
+                "category": "Papelería",
+                "thumbnails": ["ruta/g1.jpg", "ruta/g2.jpg"]
+            }
+        ]
+    },
+    {
+        "id": 4,
+        "products": [
+            {
+                "id": 8,
+                "title": "Producto H",
+                "description": "Descripción del producto H",
+                "code": 10008,
+                "price": 18000,
+                "status": true,
+                "stock": 12,
+                "category": "Computación",
+                "thumbnails": ["ruta/h1.jpg", "ruta/h2.jpg"]
+            }
+        ]
+    },
+    {
+        "id": 5,
+        "products": [
+            {
+                "id": 10,
+                "title": "Producto J",
+                "description": "Descripción del producto J",
+                "code": 10010,
+                "price": 25000,
+                "status": true,
+                "stock": 7,
+                "category": "Automotor",
+                "thumbnails": ["ruta/j1.jpg", "ruta/j2.jpg"]
             }
         ]
     }
