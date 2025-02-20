@@ -9,19 +9,18 @@ const app = express()
 
 const PORT = 8080
 
-//Middleware para poder trabajar con datos JSON 
+//Middlewares para poder trabajar con datos JSON 
 app.use(express.json())
+app.use(express.urlencoded({extended:true}))
 
 app.get("/", (req, res)=>{
-    res.send("Home Page")
+    res.setHeader('Content-Type','text/plain')
+    res.status(200).send('Ok')
 })
 
 app.get("/api/products", async(req,res)=>{
 	let {limit}=req.query
 	let products=await productManager.getProducts()
-	// const fs=require("fs")
-    // fs.readFileSync()
-
 	if(limit){
         limit=Number(limit)
         if(isNaN(limit)){
@@ -29,17 +28,24 @@ app.get("/api/products", async(req,res)=>{
         }
         products=products.slice(0, limit)
     }
-
-	res.json(products)
+	res.status(200).json(products)
 })
 
 app.get("/api/carts", async(req,res)=>{
-
 	let cart=await cartManager.getCart()
-
 	res.json(cart)
 })
 
+app.get("/api/products/:pid",async(req,res)=>{
+    let {pid}=req.params
+    let products=await productManager.getProducts()
+    //validaciones
+    let producto=products.find(p=>p.id==pid)
+    if(!producto){
+        return res.status(404).send({error:'no existen productos con id: '+pid})
+    }
+    res.status(200).send(producto)
+})
 
 //inicializacion del servidor
 app.listen(PORT, ()=>{
