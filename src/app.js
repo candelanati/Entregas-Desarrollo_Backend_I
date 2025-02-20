@@ -15,13 +15,14 @@ app.use(express.urlencoded({extended:true}))
 
 app.get("/", (req, res)=>{
     res.setHeader('Content-Type','text/plain')
-    res.status(200).send('Ok')
+    res.status(200).send('Home page')
 })
 
 app.get("/api/products", async(req,res)=>{
-	let {limit}=req.query
 	let products=await productManager.getProducts()
-	if(limit){
+	//limit
+    let {limit}=req.query
+    if(limit){
         limit=Number(limit)
         if(isNaN(limit)){
             return res.send("Error: ingrese un limit numérico")
@@ -34,7 +35,7 @@ app.get("/api/products", async(req,res)=>{
 app.get("/api/products/:pid",async(req,res)=>{
     let products=await productManager.getProducts()
     let {pid}=req.params
-    //validaciones
+    //validacion
     let producto=products.find(p=>p.id==pid)
     if(!producto){
         return res.status(404).send({error:'no existen productos con id: '+pid})
@@ -42,15 +43,105 @@ app.get("/api/products/:pid",async(req,res)=>{
     res.status(200).json(producto)
 })
 
+app.post("/api/products",  async(req,res)=>{
+     try{ 
+        console.log(req.body)
+        // let{title,description,code,price,status,stock,category,thumbnails}=req.body
+        const productoRecibido={
+            title:req.body.title,
+            description: req.body.description,
+            code: req.body.code,
+            price: Number(req.body.price), 
+            status: req.body.status === 'true' || req.body.status === true, 
+            stock: Number(req.body.stock),
+            category: req.body.category,
+            thumbnails: JSON.parse(req.body.thumbnails)
+        }
+        //validaciones
+            //existencias
+            if(!productoRecibido.title){
+                res.setHeader('Content-Type','application/json')
+                return res.status(400).send({error:"complete title"})
+            }
+            if(!productoRecibido.description){
+                res.setHeader('Content-Type','application/json')
+                return res.status(400).send({error:"complete description"})
+            }
+            if(!productoRecibido.code){
+                res.setHeader('Content-Type','application/json')
+                return res.status(400).send({error:"complete code"})
+            }
+            if(!productoRecibido.price){
+                res.setHeader('Content-Type','application/json')
+                return res.status(400).send({error:"complete price"})
+            }
+            if(!productoRecibido.status){
+                res.setHeader('Content-Type','application/json')
+                return res.status(400).send({error:"complete status"})
+            }
+            if(!productoRecibido.stock){
+                res.setHeader('Content-Type','application/json')
+                return res.status(400).send({error:"complete stock"})
+            }
+            if(!productoRecibido.category){
+                res.setHeader('Content-Type','application/json')
+                return res.status(400).send({error:"complete category"})
+            }
+            if(!productoRecibido.thumbnails){
+                res.setHeader('Content-Type','application/json')
+                return res.status(400).send({error:"complete thumbnails"})
+            }
+
+            //tipos
+            if (typeof productoRecibido.title !== "string" || !productoRecibido.title.trim()) {
+                return res.status(400).send({ error: "El título debe ser un string no vacío" })
+            }
+            if (typeof productoRecibido.description !== "string" || !productoRecibido.description.trim()) {
+                return res.status(400).send({ error: "la descripcion debe ser un string no vacío" })
+            }
+            if (typeof productoRecibido.code !== "string" || !productoRecibido.code.trim()) {
+                return res.status(400).send({ error: "El codigo debe ser un string no vacío" })
+            }
+            if (typeof productoRecibido.price !== "number" || productoRecibido.price <= 0) {
+                return res.status(400).send({ error: "El precio debe ser un número mayor a 0" })
+            }
+            if (typeof productoRecibido.status !== "boolean") {
+                return res.status(400).send({ error: "El estado debe ser un booleano (true o false)" })
+            }
+            if (typeof productoRecibido.stock !== "number" || productoRecibido.stock < 0) {
+                return res.status(400).send({ error: "El stock debe ser un número mayor o igual a 0" })
+            }
+            if (typeof productoRecibido.category !== "string" || !productoRecibido.category.trim()) {
+                return res.status(400).send({ error: "La categoria debe ser un string no vacío" })
+            }
+            if (!Array.isArray(productoRecibido.thumbnails) || !productoRecibido.thumbnails.every(el => typeof el === "string")) {
+                return res.status(400).send({ error: "Las thumbnails deben ser un array de strings" })
+            }
+        let productoNuevo = await productManager.addProduct(productoRecibido.title,productoRecibido.description,productoRecibido.code,productoRecibido.price,productoRecibido.status,productoRecibido.stock,productoRecibido.category,productoRecibido.thumbnails)
+        res.status(200).json(productoNuevo)
+     }catch (error){
+        res.status(500).send({error:'Error en el servidor'})
+     }
+})
+
 app.get("/api/carts", async(req,res)=>{
 	let carts=await cartManager.getCart()
+    //limit
+    let {limit}=req.query
+    if(limit){
+        limit=Number(limit)
+        if(isNaN(limit)){
+            return res.send("Error: ingrese un limit numérico")
+        }
+        carts=carts.slice(0, limit)
+    }
 	res.status(200).json(carts)
 })
 
 app.get("/api/carts/:cid",async(req,res)=>{
     let carts=await cartManager.getCart()
     let {cid}=req.params
-    //validaciones
+    //validacion
     let cart=carts.find(c=>c.id==cid)
     if(!cart){
         return res.status(404).send({error:'no existen carritos con id: '+cid})

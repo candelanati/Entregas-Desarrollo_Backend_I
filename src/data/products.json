@@ -1,112 +1,170 @@
 [
-    {
-        "id": 1,
-        "title": "Producto A",
-        "description": "Descripción del producto A",
-        "code": 10001,
-        "price": 15000,
-        "status": true,
-        "stock": 25,
-        "category": "Electrónica",
-        "thumbnails": ["ruta/a1.jpg", "ruta/a2.jpg"]
-    },
-    {
-        "id": 2,
-        "title": "Producto B",
-        "description": "Descripción del producto B",
-        "code": 10002,
-        "price": 20000,
-        "status": false,
-        "stock": 0,
-        "category": "Hogar",
-        "thumbnails": ["ruta/b1.jpg", "ruta/b2.jpg"]
-    },
-    {
-        "id": 3,
-        "title": "Producto C",
-        "description": "Descripción del producto C",
-        "code": 10003,
-        "price": 7500,
-        "status": true,
-        "stock": 15,
-        "category": "Deportes",
-        "thumbnails": ["ruta/c1.jpg", "ruta/c2.jpg"]
-    },
-    {
-        "id": 4,
-        "title": "Producto D",
-        "description": "Descripción del producto D",
-        "code": 10004,
-        "price": 12000,
-        "status": true,
-        "stock": 8,
-        "category": "Moda",
-        "thumbnails": ["ruta/d1.jpg", "ruta/d2.jpg"]
-    },
-    {
-        "id": 5,
-        "title": "Producto E",
-        "description": "Descripción del producto E",
-        "code": 10005,
-        "price": 9500,
-        "status": true,
-        "stock": 30,
-        "category": "Juguetes",
-        "thumbnails": ["ruta/e1.jpg", "ruta/e2.jpg"]
-    },
-    {
-        "id": 6,
-        "title": "Producto F",
-        "description": "Descripción del producto F",
-        "code": 10006,
-        "price": 30000,
-        "status": true,
-        "stock": 5,
-        "category": "Electrodomésticos",
-        "thumbnails": ["ruta/f1.jpg", "ruta/f2.jpg"]
-    },
-    {
-        "id": 7,
-        "title": "Producto G",
-        "description": "Descripción del producto G",
-        "code": 10007,
-        "price": 5000,
-        "status": false,
-        "stock": 0,
-        "category": "Papelería",
-        "thumbnails": ["ruta/g1.jpg", "ruta/g2.jpg"]
-    },
-    {
-        "id": 8,
-        "title": "Producto H",
-        "description": "Descripción del producto H",
-        "code": 10008,
-        "price": 18000,
-        "status": true,
-        "stock": 12,
-        "category": "Computación",
-        "thumbnails": ["ruta/h1.jpg", "ruta/h2.jpg"]
-    },
-    {
-        "id": 9,
-        "title": "Producto I",
-        "description": "Descripción del producto I",
-        "code": 10009,
-        "price": 6000,
-        "status": true,
-        "stock": 40,
-        "category": "Belleza",
-        "thumbnails": ["ruta/i1.jpg", "ruta/i2.jpg"]
-    },
-    {
-        "id": 10,
-        "title": "Producto J",
-        "description": "Descripción del producto J",
-        "code": 10010,
-        "price": 25000,
-        "status": true,
-        "stock": 7,
-        "category": "Automotor",
-        "thumbnails": ["ruta/j1.jpg", "ruta/j2.jpg"]
-    }
+	{
+		"id": 1,
+		"title": "Producto A",
+		"description": "Descripción del producto A",
+		"code": 10001,
+		"price": 15000,
+		"status": true,
+		"stock": 25,
+		"category": "Electrónica",
+		"thumbnails": [
+			"ruta/a1.jpg",
+			"ruta/a2.jpg"
+		]
+	},
+	{
+		"id": 2,
+		"title": "Producto B",
+		"description": "Descripción del producto B",
+		"code": 10002,
+		"price": 20000,
+		"status": false,
+		"stock": 0,
+		"category": "Hogar",
+		"thumbnails": [
+			"ruta/b1.jpg",
+			"ruta/b2.jpg"
+		]
+	},
+	{
+		"id": 3,
+		"title": "Producto C",
+		"description": "Descripción del producto C",
+		"code": 10003,
+		"price": 7500,
+		"status": true,
+		"stock": 15,
+		"category": "Deportes",
+		"thumbnails": [
+			"ruta/c1.jpg",
+			"ruta/c2.jpg"
+		]
+	},
+	{
+		"id": 4,
+		"title": "Producto D",
+		"description": "Descripción del producto D",
+		"code": 10004,
+		"price": 12000,
+		"status": true,
+		"stock": 8,
+		"category": "Moda",
+		"thumbnails": [
+			"ruta/d1.jpg",
+			"ruta/d2.jpg"
+		]
+	},
+	{
+		"id": 5,
+		"title": "Producto E",
+		"description": "Descripción del producto E",
+		"code": 10005,
+		"price": 9500,
+		"status": true,
+		"stock": 30,
+		"category": "Juguetes",
+		"thumbnails": [
+			"ruta/e1.jpg",
+			"ruta/e2.jpg"
+		]
+	},
+	{
+		"id": 6,
+		"title": "Producto F",
+		"description": "Descripción del producto F",
+		"code": 10006,
+		"price": 30000,
+		"status": true,
+		"stock": 5,
+		"category": "Electrodomésticos",
+		"thumbnails": [
+			"ruta/f1.jpg",
+			"ruta/f2.jpg"
+		]
+	},
+	{
+		"id": 7,
+		"title": "Producto G",
+		"description": "Descripción del producto G",
+		"code": 10007,
+		"price": 5000,
+		"status": false,
+		"stock": 0,
+		"category": "Papelería",
+		"thumbnails": [
+			"ruta/g1.jpg",
+			"ruta/g2.jpg"
+		]
+	},
+	{
+		"id": 8,
+		"title": "Producto H",
+		"description": "Descripción del producto H",
+		"code": 10008,
+		"price": 18000,
+		"status": true,
+		"stock": 12,
+		"category": "Computación",
+		"thumbnails": [
+			"ruta/h1.jpg",
+			"ruta/h2.jpg"
+		]
+	},
+	{
+		"id": 9,
+		"title": "Producto I",
+		"description": "Descripción del producto I",
+		"code": 10009,
+		"price": 6000,
+		"status": true,
+		"stock": 40,
+		"category": "Belleza",
+		"thumbnails": [
+			"ruta/i1.jpg",
+			"ruta/i2.jpg"
+		]
+	},
+	{
+		"id": 10,
+		"title": "Producto J",
+		"description": "Descripción del producto J",
+		"code": 10010,
+		"price": 25000,
+		"status": true,
+		"stock": 7,
+		"category": "Automotor",
+		"thumbnails": [
+			"ruta/j1.jpg",
+			"ruta/j2.jpg"
+		]
+	},
+	{
+		"id": 11,
+		"title": "Producto x",
+		"description": "Descripcion producto x",
+		"code": "18000",
+		"price": 29393,
+		"status": true,
+		"stock": 30,
+		"category": "Ejemplooooo",
+		"thumbnails": [
+			"ruta1",
+			"ruta2"
+		]
+	},
+	{
+		"id": 12,
+		"title": "Producto x",
+		"description": "Descripcion producto x",
+		"code": "18000",
+		"price": 29393,
+		"status": true,
+		"stock": 30,
+		"category": "Ejemplooooo",
+		"thumbnails": [
+			"ruta1",
+			"ruta2"
+		]
+	}
 ]
