@@ -148,6 +148,45 @@ app.get("/api/carts/:cid",async(req,res)=>{
     res.status(200).json(cart)
 })
 
+app.post("/api/carts",  async(req,res)=>{
+    try{ 
+        let {products}=req.body
+        let productosRecibidosCart=JSON.parse(products)
+        let productsExistentes= await productManager.getProducts()
+        console.log('\n productos recibidos:')
+        console.log(productosRecibidosCart)
+        console.log('\n productos existentes:')
+        console.log(productsExistentes)
+        //validaciones
+            //existencias
+            let productoNoExistente = productosRecibidosCart.find(recibido => {
+                return !productsExistentes.some(existente => 
+                    existente.id == recibido.id &&
+                    existente.title == recibido.title &&
+                    existente.description == recibido.description &&
+                    existente.code == recibido.code &&
+                    existente.price == recibido.price &&
+                    existente.status == recibido.status &&
+                    existente.stock == recibido.stock &&
+                    existente.category == recibido.category &&
+                    JSON.stringify(existente.thumbnails) === JSON.stringify(recibido.thumbnails)
+                );
+            });
+            if (productoNoExistente) {
+                return res.status(404).send({
+                    error: `El producto: ${productoNoExistente.title} no existe en la lista de productos existentes o no coincide con sus datos`
+                });
+            }
+    
+        let productoNuevo = await cartManager.addCart(productosRecibidosCart)
+        res.status(200).json(productoNuevo)
+    
+    
+    }catch (error){
+       res.status(500).send({error:'Error en el servidor'})
+    }
+})
+
 //inicializacion del servidor
 app.listen(PORT, ()=>{
 	console.log('servidor corriendo en el puerto '+PORT)

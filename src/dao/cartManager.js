@@ -20,11 +20,6 @@ class CartManager{
             id=Math.max(...cart.map(el=>el.id))+1
         }
 
-        //validaciones?
-        // if(cart.length>0&&cart.find(el=>el.product.id===product.id)){
-        //     //aumentar cantidad
-        // }
-
         let newCart={
             id,
             product
