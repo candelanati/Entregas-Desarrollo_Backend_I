@@ -50,7 +50,7 @@ app.post("/api/products",  async(req,res)=>{
             title:req.body.title,
             description: req.body.description,
             code: req.body.code,
-            price: Number(req.body.price), 
+            price: Number(req.body.price),
             status: req.body.status === 'true' || req.body.status === true, 
             stock: Number(req.body.stock),
             category: req.body.category,

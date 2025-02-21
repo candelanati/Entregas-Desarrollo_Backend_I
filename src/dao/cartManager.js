@@ -13,7 +13,7 @@ class CartManager{
         }
     }
 
-    async addCart(product){
+    async addCart(products){
         let cart = await this.getCart()
         let id = 1
         if (cart.length>0){
@@ -22,7 +22,7 @@ class CartManager{
 
         let newCart={
             id,
-            product
+            products
         }
 
         cart.push(newCart)
