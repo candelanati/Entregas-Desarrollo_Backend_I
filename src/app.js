@@ -45,6 +45,7 @@ app.get("/api/products/:pid",async(req,res)=>{
 
 app.post("/api/products",  async(req,res)=>{
      try{ 
+        let productosExistentes = await productManager.getProducts()
         console.log(req.body)
         const productoRecibido={
             title:req.body.title,
@@ -57,7 +58,26 @@ app.post("/api/products",  async(req,res)=>{
             thumbnails: JSON.parse(req.body.thumbnails)
         }
         //validaciones
-            //existencias
+            //pre-existencias
+            if(productosExistentes.some(existente => 
+                existente.title == productoRecibido.title &&
+                existente.description == productoRecibido.description &&
+                existente.code == productoRecibido.code &&
+                existente.price == productoRecibido.price &&
+                existente.status == productoRecibido.status &&
+                existente.stock == productoRecibido.stock &&
+                existente.category == productoRecibido.category &&
+                JSON.stringify(existente.thumbnails) === JSON.stringify(productoRecibido.thumbnails)
+            )){
+                return res.status(400).send({error:'el producto ya existe en la lista de productos'})
+            }else{
+                //pre existencia del titulo
+                if(productosExistentes.some(existente =>existente.title == productoRecibido.title)){
+                    return res.status(400).send({error:'ya existe un producto con el nombre: '+productoRecibido.title})
+                }
+            }
+
+            //completar keys
             if(!productoRecibido.title){
                 res.setHeader('Content-Type','application/json')
                 return res.status(400).send({error:"complete title"})
