@@ -46,7 +46,6 @@ app.get("/api/products/:pid",async(req,res)=>{
 app.post("/api/products",  async(req,res)=>{
      try{ 
         console.log(req.body)
-        // let{title,description,code,price,status,stock,category,thumbnails}=req.body
         const productoRecibido={
             title:req.body.title,
             description: req.body.description,
