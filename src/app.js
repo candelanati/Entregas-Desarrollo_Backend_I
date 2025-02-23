@@ -172,13 +172,18 @@ app.get("/api/carts/:cid",async(req,res)=>{
 app.post("/api/carts",  async(req,res)=>{
     try{ 
         let {products}=req.body
-        let productosRecibidosCart=JSON.parse(products)
+        if(!products){
+            products=[]
+        }
+        console.log(products)
+        let productosRecibidosCart=products
         let productsExistentes= await productManager.getProducts()
         console.log('\n productos recibidos:')
         console.log(productosRecibidosCart)
         console.log('\n productos existentes:')
         console.log(productsExistentes)
         //validaciones
+            
             //existencias
             let productoNoExistente = productosRecibidosCart.find(recibido => {
                 return !productsExistentes.some(existente => 
