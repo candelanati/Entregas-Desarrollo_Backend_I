@@ -172,6 +172,7 @@ app.get("/api/carts/:cid",async(req,res)=>{
 app.post("/api/carts",  async(req,res)=>{
     try{ 
         let {products}=req.body
+        //caso en el que no se envie nada por body
         if(!products){
             products=[]
         }
