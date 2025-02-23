@@ -107,10 +107,10 @@ app.post("/api/products",  async(req,res)=>{
                 res.setHeader('Content-Type','application/json')
                 return res.status(400).send({error:"complete category"})
             }
-            if(!productoRecibido.thumbnails){
-                res.setHeader('Content-Type','application/json')
-                return res.status(400).send({error:"complete thumbnails"})
-            }
+            // if(!productoRecibido.thumbnails){
+            //     res.setHeader('Content-Type','application/json')
+            //     return res.status(400).send({error:"complete thumbnails"})
+            // }
 
             //tipos
             if (typeof productoRecibido.title !== "string" || !productoRecibido.title.trim()) {
@@ -119,8 +119,8 @@ app.post("/api/products",  async(req,res)=>{
             if (typeof productoRecibido.description !== "string" || !productoRecibido.description.trim()) {
                 return res.status(400).send({ error: "la descripcion debe ser un string no vacío" })
             }
-            if (typeof productoRecibido.code !== "string" || !productoRecibido.code.trim()) {
-                return res.status(400).send({ error: "El codigo debe ser un string no vacío" })
+            if (typeof productoRecibido.code !== "number" ) {
+                return res.status(400).send({ error: "El codigo debe ser un numero" })
             }
             if (typeof productoRecibido.price !== "number" || productoRecibido.price <= 0) {
                 return res.status(400).send({ error: "El precio debe ser un número mayor a 0" })
@@ -134,7 +134,7 @@ app.post("/api/products",  async(req,res)=>{
             if (typeof productoRecibido.category !== "string" || !productoRecibido.category.trim()) {
                 return res.status(400).send({ error: "La categoria debe ser un string no vacío" })
             }
-            if (!Array.isArray(productoRecibido.thumbnails) || !productoRecibido.thumbnails.every(el => typeof el === "string")) {
+            if (!Array.isArray(productoRecibido.thumbnails)&&productoRecibido.thumbnails&&!productoRecibido.thumbnails.every(el => typeof el === "string")) {
                 return res.status(400).send({ error: "Las thumbnails deben ser un array de strings" })
             }
         let productoNuevo = await productManager.addProduct(productoRecibido.title,productoRecibido.description,productoRecibido.code,productoRecibido.price,productoRecibido.status,productoRecibido.stock,productoRecibido.category,productoRecibido.thumbnails)
