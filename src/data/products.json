@@ -138,19 +138,5 @@
 			"ruta/j1.jpg",
 			"ruta/j2.jpg"
 		]
-	},
-	{
-		"id": 11,
-		"title": "Producto x",
-		"description": "Descripcion producto x",
-		"code": "18000",
-		"price": 29393,
-		"status": true,
-		"stock": 30,
-		"category": "Ejemplo",
-		"thumbnails": [
-			"ruta1",
-			"ruta2"
-		]
 	}
 ]

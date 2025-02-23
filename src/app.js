@@ -204,7 +204,7 @@ app.post("/api/carts",  async(req,res)=>{
     
     
     }catch (error){
-       res.status(500).send({error:'Error en el servidor'})
+       res.status(500).send({error:'Error en el servidor '+error})
     }
 })
 
