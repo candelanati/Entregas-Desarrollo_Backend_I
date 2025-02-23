@@ -6,6 +6,7 @@ class ProductsManager{
     }
 
     async getProducts(){
+        console.log(this.path)
         if(fs.existsSync(this.path)){
             return JSON.parse(await fs.promises.readFile(this.path, "utf-8"))
         }else{

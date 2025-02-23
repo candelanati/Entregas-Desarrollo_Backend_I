@@ -1,9 +1,9 @@
 const express = require('express')
-const { ProductsManager}=require("./dao/productsManager.js")
+const { ProductsManager }=require("./dao/productsManager.js")
 const {CartManager}=require("./dao/cartManager.js")
 
-const cartManager = new CartManager("./data/cart.json")
-const productManager=new ProductsManager("./data/products.json")
+const cartManager = new CartManager("./src/data/cart.json")
+const productManager = new ProductsManager("./src/data/products.json")
 
 const app = express()
 
