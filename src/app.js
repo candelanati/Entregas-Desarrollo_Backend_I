@@ -71,9 +71,9 @@ app.post("/api/products",  async(req,res)=>{
             )){
                 return res.status(400).send({error:'el producto ya existe en la lista de productos'})
             }else{
-                //pre existencia del titulo
-                if(productosExistentes.some(existente =>existente.title == productoRecibido.title)){
-                    return res.status(400).send({error:'ya existe un producto con el nombre: '+productoRecibido.title})
+                //pre existencia del código
+                if(productosExistentes.some(existente =>existente.code == productoRecibido.code)){
+                    return res.status(400).send({error:'ya existe un producto con el código: '+productoRecibido.code})
                 }
             }
 
