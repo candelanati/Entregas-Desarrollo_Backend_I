@@ -47,6 +47,7 @@ app.post("/api/products",  async(req,res)=>{
      try{ 
         let productosExistentes = await productManager.getProducts()
         console.log(req.body)
+        
         const productoRecibido={
             title:req.body.title,
             description: req.body.description,
@@ -55,7 +56,7 @@ app.post("/api/products",  async(req,res)=>{
             status: req.body.status === 'true' || req.body.status === true, 
             stock: Number(req.body.stock),
             category: req.body.category,
-            thumbnails: JSON.parse(req.body.thumbnails)
+            thumbnails:  req.body.thumbnails
         }
         //validaciones
             //pre-existencias
@@ -139,7 +140,7 @@ app.post("/api/products",  async(req,res)=>{
         let productoNuevo = await productManager.addProduct(productoRecibido.title,productoRecibido.description,productoRecibido.code,productoRecibido.price,productoRecibido.status,productoRecibido.stock,productoRecibido.category,productoRecibido.thumbnails)
         res.status(200).json(productoNuevo)
      }catch (error){
-        res.status(500).send({error:'Error en el servidor'})
+        res.status(500).send({error:'Error en el servidor: '+error})
      }
 })
 
