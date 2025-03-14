@@ -107,10 +107,10 @@ app.post("/api/products",  async(req,res)=>{
                 res.setHeader('Content-Type','application/json')
                 return res.status(400).send({error:"complete category"})
             }
-            // if(!productoRecibido.thumbnails){
-            //     res.setHeader('Content-Type','application/json')
-            //     return res.status(400).send({error:"complete thumbnails"})
-            // }
+             if(!productoRecibido.thumbnails){
+                 res.setHeader('Content-Type','application/json')
+                 return res.status(400).send({error:"complete thumbnails"})
+             }
 
             //tipos
             if (typeof productoRecibido.title !== "string" || !productoRecibido.title.trim()) {
