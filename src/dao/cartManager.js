@@ -19,13 +19,19 @@ class CartManager{
         if (cart.length>0){
             id=Math.max(...cart.map(el=>el.id))+1
         }
+        let productsCart = products.map(p=>({
+            product:p.id,
+            quantity:1
+        }))
+
+        console.log(productsCart)
 
         let newCart={
             id,
             products
         }
 
-        cart.push(newCart)
+         cart.push(newCart)
         await fs.promises.writeFile(this.path, JSON.stringify(cart, null, "\t"))
         return newCart
     }
