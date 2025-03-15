@@ -161,8 +161,8 @@ app.get("/api/carts", async(req,res)=>{
 app.get("/api/carts/:cid",async(req,res)=>{
     let carts=await cartManager.getCart()
     let {cid}=req.params
-    //validacion
     let cart=carts.find(c=>c.id==cid)
+    //validacion
     if(!cart){
         return res.status(404).send({error:'no existen carritos con id: '+cid})
     }
@@ -211,6 +211,30 @@ app.post("/api/carts",  async(req,res)=>{
     
     }catch (error){
        res.status(500).send({error:'Error en el servidor '+error})
+    }
+})
+
+app.post("/api/carts/:cid/product/:pid", async(req,res)=>{
+    try{
+        let {cid,pid}=req.params
+        let carts = await cartManager.getCart()
+        let cartEncontrado=carts.find(c=>c.id==cid)
+        if(!cartEncontrado){
+            res.status(404).send("carrito con id " +cid+" no encontrado")
+        }
+        let productEncontrado=cartEncontrado.products.find(p=>p.product==pid)
+        console.log(productEncontrado)
+        if(!productEncontrado){
+            cartEncontrado.products.push({product:Number(pid),quantity:1})
+        }else{
+            productEncontrado.quantity+=1
+        }
+        
+        
+        let cartActualizado = await cartManager.updateCart(cartEncontrado)
+        res.status(200).json(cartActualizado)
+    }catch(error){
+        res.status(500).send({error:"Error en el servidor "+error})
     }
 })
 

@@ -31,10 +31,21 @@ class CartManager{
             products
         }
 
-         cart.push(newCart)
+        cart.push(newCart)
         await fs.promises.writeFile(this.path, JSON.stringify(cart, null, "\t"))
         return newCart
     }
+
+    async updateCart (cartEncontrado){
+        let carts = await this.getCart()
+        let position = carts.findIndex(cart=>cart.id===cartEncontrado.id)
+        if(position!==-1){
+            carts[position]=cartEncontrado
+        }
+        await fs.promises.writeFile(this.path, JSON.stringify(carts, null, "\t"))
+        return carts[position]
+    }
+
 }
 module.exports={
     CartManager
