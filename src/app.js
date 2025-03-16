@@ -18,6 +18,7 @@ app.get("/", (req, res)=>{
     res.status(200).send('Home page')
 })
 
+//products
 app.get("/api/products", async(req,res)=>{
 	let products=await productManager.getProducts()
 	//limit
@@ -149,6 +150,23 @@ app.post("/api/products",  async(req,res)=>{
      }
 })
 
+app.put("/api/products/:pid", async(req,res)=>{
+    try{
+        const {pid}=req.params
+        let products = await productManager.getProducts()
+        let position = products.findIndex(product=>product.id===Number(pid))
+        if(position===-1){
+            return res.status(400).send('El producto a eliminar con id '+pid+' no existe')
+        }
+        const updatedData = req.body
+        const productoActualizado = await productManager.updateProduct(pid,updatedData)
+        res.status(200).json(productoActualizado)
+    }catch(error){
+        res.status(500).send({error:'Error en el servidor: '+error})
+    }
+})
+
+//carts
 app.get("/api/carts", async(req,res)=>{
 	let carts=await cartManager.getCart()
     //limit

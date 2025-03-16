@@ -38,6 +38,20 @@ class ProductsManager{
         return newProduct
     }
 
+    async updateProduct(pid,updatedData){
+        let products = await this.getProducts()
+        let position = products.findIndex(product=>product.id===Number(pid))
+        let productToUpdate = products[position]
+        Object.keys(updatedData).forEach(key=>{
+            if(key!=='id'){
+                productToUpdate[key]=updatedData[key]
+            }
+        })
+        await fs.promises.writeFile(this.path, JSON.stringify(products, null, "\t"))
+        console.log("Archivo actualizado correctamente.")
+        return productToUpdate
+    }
+
 }
 
 module.exports={
