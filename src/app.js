@@ -134,11 +134,16 @@ app.post("/api/products",  async(req,res)=>{
             if (typeof productoRecibido.category !== "string" || !productoRecibido.category.trim()) {
                 return res.status(400).send({ error: "La categoria debe ser un string no vacío" })
             }
-            if (!Array.isArray(productoRecibido.thumbnails)&&productoRecibido.thumbnails&&!productoRecibido.thumbnails.every(el => typeof el === "string")) {
+            if(!Array.isArray(productoRecibido.thumbnails)){
                 return res.status(400).send({ error: "Las thumbnails deben ser un array de strings" })
+            }else{
+                if (productoRecibido.thumbnails&&!productoRecibido.thumbnails.every(el => typeof el === "string")) {
+                    return res.status(400).send({ error: "Las thumbnails deben ser un array de strings"})
+                }
             }
+            
         let productoNuevo = await productManager.addProduct(productoRecibido.title,productoRecibido.description,productoRecibido.code,productoRecibido.price,productoRecibido.status,productoRecibido.stock,productoRecibido.category,productoRecibido.thumbnails)
-        res.status(200).json(productoNuevo)
+        res.status(201).json(productoNuevo)
      }catch (error){
         res.status(500).send({error:'Error en el servidor: '+error})
      }
@@ -206,7 +211,7 @@ app.post("/api/carts",  async(req,res)=>{
             }
     
         let productoNuevo = await cartManager.addCart(productosRecibidosCart)
-        res.status(200).json(productoNuevo)
+        res.status(201).json(productoNuevo)
     
     
     }catch (error){
@@ -230,9 +235,8 @@ app.post("/api/carts/:cid/product/:pid", async(req,res)=>{
             productEncontrado.quantity+=1
         }
         
-        
         let cartActualizado = await cartManager.updateCart(cartEncontrado)
-        res.status(200).json(cartActualizado)
+        res.status(201).json(cartActualizado)
     }catch(error){
         res.status(500).send({error:"Error en el servidor "+error})
     }
