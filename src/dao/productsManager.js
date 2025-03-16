@@ -35,6 +35,7 @@ class ProductsManager{
 
         products.push(newProduct)
         await fs.promises.writeFile(this.path, JSON.stringify(products, null, "\t"))
+        console.log("Archivo actualizado correctamente.")
         return newProduct
     }
 
@@ -52,6 +53,13 @@ class ProductsManager{
         return productToUpdate
     }
 
+    async deleteProduct(pid){
+        let products = await this.getProducts()
+        products = products.filter(product => product.id!==Number(pid))
+        await fs.promises.writeFile(this.path, JSON.stringify(products, null, "\t"))
+        console.log("Archivo actualizado correctamente.")
+        return products
+    }
 }
 
 module.exports={

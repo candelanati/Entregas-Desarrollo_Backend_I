@@ -155,12 +155,28 @@ app.put("/api/products/:pid", async(req,res)=>{
         const {pid}=req.params
         let products = await productManager.getProducts()
         let position = products.findIndex(product=>product.id===Number(pid))
+        //validacion existencia
         if(position===-1){
-            return res.status(400).send('El producto a eliminar con id '+pid+' no existe')
+            return res.status(400).send('El producto a actualizar con id '+pid+' no existe')
         }
         const updatedData = req.body
         const productoActualizado = await productManager.updateProduct(pid,updatedData)
         res.status(200).json(productoActualizado)
+    }catch(error){
+        res.status(500).send({error:'Error en el servidor: '+error})
+    }
+})
+
+app.delete("/api/products/:pid", async(req,res)=>{
+    try{
+        const {pid} = req.params
+        const products = await productManager.getProducts()
+        //validacion existencia
+        if(!products.find(product=>product.id===Number(pid))){
+            res.status(400).send('El producto a eliminar con id '+pid+' no existe')
+        }
+        let productsEliminado = await productManager.deleteProduct(pid)
+        res.status(200).json(productsEliminado)
     }catch(error){
         res.status(500).send({error:'Error en el servidor: '+error})
     }
