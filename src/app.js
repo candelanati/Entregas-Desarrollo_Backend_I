@@ -120,17 +120,17 @@ app.post("/api/products",  async(req,res)=>{
             if (typeof productoRecibido.description !== "string" || !productoRecibido.description.trim()) {
                 return res.status(400).send({ error: "la descripcion debe ser un string no vacío" })
             }
-            if (typeof productoRecibido.code !== "number" ) {
-                return res.status(400).send({ error: "El codigo debe ser un numero" })
+            if (typeof req.body.code !== "number" || isNaN(req.body.code) || productoRecibido.code <= 0) {
+                return res.status(400).send({ error: "El codigo debe ser un número mayor a 0" });
             }
-            if (typeof productoRecibido.price !== "number" || productoRecibido.price <= 0) {
-                return res.status(400).send({ error: "El precio debe ser un número mayor a 0" })
+            if (typeof req.body.price !== "number" || isNaN(req.body.price) || productoRecibido.price < 0) {
+                return res.status(400).send({ error: "El precio debe ser un número mayor o igual a 0" });
             }
             if (typeof productoRecibido.status !== "boolean") {
                 return res.status(400).send({ error: "El estado debe ser un booleano (true o false)" })
             }
-            if (typeof productoRecibido.stock !== "number" || productoRecibido.stock < 0) {
-                return res.status(400).send({ error: "El stock debe ser un número mayor o igual a 0" })
+            if (typeof req.body.stock !== "number" || isNaN(req.body.stock) || productoRecibido.stock < 0) {
+                return res.status(400).send({ error: "El stock debe ser un número mayor o igual a 0" });
             }
             if (typeof productoRecibido.category !== "string" || !productoRecibido.category.trim()) {
                 return res.status(400).send({ error: "La categoria debe ser un string no vacío" })
@@ -159,7 +159,58 @@ app.put("/api/products/:pid", async(req,res)=>{
         if(position===-1){
             return res.status(400).send('El producto a actualizar con id '+pid+' no existe')
         }
+        //validacion existencia de valores a actualizar
         const updatedData = req.body
+        console.log('Datos enviados por el body:')
+        console.log(updatedData)
+        if(!updatedData||Object.keys(updatedData).length===0){
+            return res.status(400).send('Debe enviar un valor para actualizar')
+        }
+
+        //validaciones valores y tipos
+        const productoRecibido={
+            title:req.body.title,
+            description: req.body.description,
+            code: req.body.code,
+            price: Number(req.body.price),
+            status: req.body.status === 'true' || req.body.status === true, 
+            stock: Number(req.body.stock),
+            category: req.body.category,
+            thumbnails:  req.body.thumbnails
+        }
+        if (productoRecibido.title&&typeof productoRecibido.title !== "string" || productoRecibido.title&&!productoRecibido.title.trim()) {
+            return res.status(400).send({ error: "El título debe ser un string no vacío" })
+        }
+        if (productoRecibido.description&&typeof productoRecibido.description !== "string" || productoRecibido.description&&!productoRecibido.description.trim()) {
+            return res.status(400).send({ error: "la descripcion debe ser un string no vacío" })
+        }
+        if (productoRecibido.code&&typeof productoRecibido.code !== "number" ) {
+            return res.status(400).send({ error: "El codigo debe ser un numero" })
+        }
+        if (req.body.price !== undefined) { 
+            if (typeof req.body.price !== "number" || isNaN(req.body.price) || req.body.price <= 0) {
+                return res.status(400).send({ error: "El precio debe ser un número mayor a 0" });
+            }
+        }
+        if (productoRecibido.status&&typeof productoRecibido.status !== "boolean") {
+            return res.status(400).send({ error: "El estado debe ser un booleano (true o false)" })
+        }
+        if (req.body.stock !== undefined) { 
+            if (typeof req.body.stock !== "number" || isNaN(req.body.stock) || req.body.stock < 0) {
+                return res.status(400).send({ error: "El stock debe ser un número mayor o igual a 0" });
+            }
+        }
+        if (productoRecibido.category&&typeof productoRecibido.category !== "string" || productoRecibido.category&&!productoRecibido.category.trim()) {
+            return res.status(400).send({ error: "La categoria debe ser un string no vacío" })
+        }
+        if(productoRecibido.thumbnails&&!Array.isArray(productoRecibido.thumbnails)){
+            return res.status(400).send({ error: "Las thumbnails deben ser un array de strings" })
+        }else{
+            if (productoRecibido.thumbnails&&!productoRecibido.thumbnails.every(el => typeof el === "string")) {
+                return res.status(400).send({ error: "Las thumbnails deben ser un array de strings"})
+            }
+        }
+
         const productoActualizado = await productManager.updateProduct(pid,updatedData)
         res.status(200).json(productoActualizado)
     }catch(error){
