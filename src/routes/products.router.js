@@ -1,4 +1,5 @@
 const {Router} = require("express")
+
 const { ProductsManager }=require("../dao/productsManager.js")
 const productManager = new ProductsManager("./src/data/products.json")
 
@@ -6,6 +7,8 @@ const router = Router()
 
 router.get("/", async(req,res)=>{
 	let products=await productManager.getProducts()
+    req.io.emit("ProductosGet", products)
+    console.log(products)
 	//limit
     let {limit}=req.query
     if(limit){
@@ -20,12 +23,14 @@ router.get("/", async(req,res)=>{
 
 router.get("/:pid",async(req,res)=>{
     let products=await productManager.getProducts()
+    
     let {pid}=req.params
     //validacion
     let producto=products.find(p=>p.id==pid)
     if(!producto){
         return res.status(404).send({error:'no existen productos con id: '+pid})
     }
+    req.io.emit("Product", producto)
     res.status(200).json(producto)
 })
 
@@ -63,7 +68,6 @@ router.post("/",  async(req,res)=>{
                     return res.status(400).send({error:'ya existe un producto con el código: '+productoRecibido.code})
                 }
             }
-
             //completar keys
             if(!productoRecibido.title){
                 res.setHeader('Content-Type','application/json')
@@ -129,6 +133,7 @@ router.post("/",  async(req,res)=>{
             }
             
         let productoNuevo = await productManager.addProduct(productoRecibido.title,productoRecibido.description,productoRecibido.code,productoRecibido.price,productoRecibido.status,productoRecibido.stock,productoRecibido.category,productoRecibido.thumbnails)
+        req.io.emit("ProductoNuevo", productoNuevo)
         res.status(201).json(productoNuevo)
      }catch (error){
         res.status(500).send({error:'Error en el servidor: '+error})
