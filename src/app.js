@@ -19,8 +19,7 @@ app.use(express.json())
 app.use(express.urlencoded({extended:true}))
 app.use(express.static('public'))
 
-// //products
-// app.use("/api/products",routerProducts)
+
 //carts
 app.use("/api/carts",routerCarts)
 app.use('/',viewsRouter)
@@ -68,7 +67,7 @@ io.on("connection", async(socket)=>{
             socket.emit("validationError", validationRes)
         }
         else {
-            socket.emit("validationError", validationRes); // Emite el error al cliente
+            socket.emit("validationError", validationRes) // Emite el error 
         }
     })
     

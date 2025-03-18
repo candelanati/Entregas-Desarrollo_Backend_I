@@ -1,3 +1,14 @@
 <h1>Lista de productos por HTTP</h1>
 <br><br>
 <div id="lista-desactualizada"></div>
+<script src="/js/listaDesactualizada.js"></script>
+<script>
+    fetch("/api/products")
+        .then(response => response.json())
+        .then(data => {
+            //console.log(data); // Aquí sí existe
+            renderProducts(data);
+        })
+        .catch(error => console.error("Error al obtener productos:", error));
+</script>
+

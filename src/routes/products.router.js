@@ -1,6 +1,7 @@
 const {Router} = require("express")
 
 const { ProductsManager }=require("../dao/productsManager.js")
+// const { renderProducts } = require("../utilities/listaDesactualizada.js")
 const productManager = new ProductsManager("./src/data/products.json")
 
 const router = Router()
@@ -8,7 +9,7 @@ const router = Router()
 router.get("/", async(req,res)=>{
 	let products=await productManager.getProducts()
     req.io.emit("ProductosGet", products)
-    console.log(products)
+    //console.log(products)
 	//limit
     let {limit}=req.query
     if(limit){
