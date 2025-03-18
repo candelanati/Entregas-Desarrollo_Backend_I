@@ -114,4 +114,24 @@ document.addEventListener("DOMContentLoaded", function() {
     socket.on("disconnect", () => {
         console.log("Desconectado del servidor WebSocket")
     })
+
+    // Escucha el evento de error de validación
+    socket.on("validationError", (errorMessage) => {
+    console.log('div creado')
+    // Crea o actualiza un elemento en el DOM para mostrar el mensaje de error
+    const errorDiv = document.createElement("div")
+    errorDiv.id="error-message"
+    errorDiv.style.color = "red"
+    errorDiv.textContent = errorMessage
+
+    // Si ya existe un mensaje de error, lo reemplaza
+    const existingErrorDiv = document.getElementById("error-message")
+    if (existingErrorDiv) {
+        existingErrorDiv.replaceWith(errorDiv)
+    } else {
+        errorDiv.id = "error-message";
+        document.querySelector("form").insertAdjacentElement("beforebegin", errorDiv);
+    }
+});
 })
+

@@ -60,14 +60,15 @@ io.on("connection", async(socket)=>{
     socket.on("nuevoProducto", async (title,description,code,price,status,stock,category,thumbnails) => {
         let productosExistentes = await productManager.getProducts()
         let productoNuevo = {title,description,code,price,status,stock,category,thumbnails}
-        validationRes = validacionesPost(productosExistentes,productoNuevo)
+        let validationRes = validacionesPost(productosExistentes,productoNuevo)
         if(validationRes === ''){
             io.emit("nuevoProducto", await productManager.addProduct(title,description,code,price,status,stock,category,thumbnails))
             let productos = await productManager.getProducts()
             socket.emit("updateProducts",productos)
+            socket.emit("validationError", validationRes)
         }
         else {
-            console.log(validationRes)
+            socket.emit("validationError", validationRes); // Emite el error al cliente
         }
     })
     
