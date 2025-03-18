@@ -76,6 +76,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
         // Enviar los datos a través de WebSocket
         
+
         socket.emit("nuevoProducto", product.title,product.description,product.code,product.price,product.status,product.stock,product.category,product.thumbnails)
 
 
@@ -129,8 +130,17 @@ document.addEventListener("DOMContentLoaded", function() {
     if (existingErrorDiv) {
         existingErrorDiv.replaceWith(errorDiv)
     } else {
-        errorDiv.id = "error-message";
-        document.querySelector("form").insertAdjacentElement("beforebegin", errorDiv);
+        // Limpiar los campos del formulario después de enviar
+        document.getElementById("title").value = ""
+        document.getElementById("description").value = ""
+        document.getElementById("code").value = ""
+        document.getElementById("price").value = ""
+        document.getElementById("stock").value = ""
+        document.getElementById("category").value = ""
+        document.getElementById("thumbnails").value = ""
+        document.querySelector("select").selectedIndex = 0 // Para limpiar el select
+        errorDiv.id = "error-message"
+        document.querySelector("form").insertAdjacentElement("beforebegin", errorDiv)
     }
 });
 })
