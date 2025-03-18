@@ -2,7 +2,7 @@
 	{
 		"id": 1,
 		"title": "Producto A",
-		"description": "MODIFICACION REALIZADA...!!!",
+		"description": "Descripción del producto A",
 		"code": 10001,
 		"price": 7000,
 		"status": true,
