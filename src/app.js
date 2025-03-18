@@ -5,6 +5,7 @@ const routerProducts = require("./routes/products.router.js")
 const routerCarts = require("./routes/carts.router.js")
 const viewsRouter = require('./routes/views.router.js')
 const { ProductsManager } = require('./dao/productsManager.js')
+const { validacionesPost } = require('./utilities/validationsPost.js')
 const productManager = new ProductsManager("./src/data/products.json")
 
 const app = express()
@@ -55,13 +56,19 @@ io.on("connection", async(socket)=>{
     console.log("cliente conectado a websockets")
     let productos = await productManager.getProducts()
     socket.emit("updateProducts", productos)
-    console.log('productos al cargar' +productos)
     socket.emit("ProductosGet",productos)
     socket.on("nuevoProducto", async (title,description,code,price,status,stock,category,thumbnails) => {
-        io.emit("nuevoProducto", await productManager.addProduct(title,description,code,price,status,stock,category,thumbnails))
-        //let productos = await productManager.getProducts()
-       console.log('productos al cargar' +productos)
-        socket.emit("updateProducts",productos)
-    });
+        let productosExistentes = await productManager.getProducts()
+        let productoNuevo = {title,description,code,price,status,stock,category,thumbnails}
+        validationRes = validacionesPost(productosExistentes,productoNuevo)
+        if(validationRes === ''){
+            io.emit("nuevoProducto", await productManager.addProduct(title,description,code,price,status,stock,category,thumbnails))
+            let productos = await productManager.getProducts()
+            socket.emit("updateProducts",productos)
+        }
+        else {
+            console.log(validationRes)
+        }
+    })
     
 })

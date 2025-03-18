@@ -11,3 +11,7 @@ body {
     padding: 4rem;
     position: relative;
 }
+.aclaracion{
+    font-size:medium !important;
+    color: #c2c7d085 !important;
+}
