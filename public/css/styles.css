@@ -1,0 +1,13 @@
+article {
+    transform: scale(0.65);
+    padding: 2rem;
+    min-width: 32rem;
+    position: fixed;
+    top: -9rem;
+    right: 2rem;
+}
+
+body {
+    padding: 4rem;
+    position: relative;
+}

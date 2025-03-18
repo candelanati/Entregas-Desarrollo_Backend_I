@@ -17,7 +17,7 @@ document.addEventListener("DOMContentLoaded", function() {
         products.forEach((product) => {
             const item = document.createElement("div")
             item.innerHTML = `
-                <h2><strong>título:</strong> ${product.title}</h2>
+                <h4><strong>título:</strong> ${product.title}</h4>
                 <p><strong>descripción:</strong> ${product.description}</p>
                 <p><strong>precio:</strong> ${product.price}</p>
                 <p><strong>categoría:</strong> ${product.category}</p>
@@ -41,7 +41,7 @@ document.addEventListener("DOMContentLoaded", function() {
         nombreListaActualizada.innerHTML=`producto con id ${product.id}`
             const item = document.createElement("div")
             item.innerHTML = `
-                <h2><strong>título:</strong> ${product.title}</h2>
+                <h4><strong>título:</strong> ${product.title}</h4>
                 <p><strong>descripción:</strong> ${product.description}</p>
                 <p><strong>precio:</strong> ${product.price}</p>
                 <p><strong>categoría:</strong> ${product.category}</p>
@@ -94,7 +94,7 @@ document.addEventListener("DOMContentLoaded", function() {
         products.forEach((product) => {
             const item = document.createElement("div")
             item.innerHTML = `
-                <h2><strong>título:</strong> ${product.title}</h2>
+                <h4><strong>título:</strong> ${product.title}</h4>
                 <p><strong>descripción:</strong> ${product.description}</p>
                 <p><strong>precio:</strong> ${product.price}</p>
                 <p><strong>categoría:</strong> ${product.category}</p>
