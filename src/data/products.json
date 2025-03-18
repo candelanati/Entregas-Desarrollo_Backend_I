@@ -2,9 +2,9 @@
 	{
 		"id": 1,
 		"title": "Producto A",
-		"description": "Descripción del producto A",
+		"description": "MODIFICACION REALIZADA...!!!",
 		"code": 10001,
-		"price": 15000,
+		"price": 7000,
 		"status": true,
 		"stock": 25,
 		"category": "Electrónica",

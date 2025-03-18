@@ -12,7 +12,7 @@ socket.on("ProductosGet", products=>{
     
     listaActualizada.innerHTML = ""
     nombreListaActualizada.innerHTML=""
-    nombreListaActualizada.innerHTML=`Lista de productos: `
+    nombreListaActualizada.innerHTML=`Lista actualizada: `
     products.forEach((product) => {
         const item = document.createElement("div")
         item.innerHTML = `
@@ -26,7 +26,6 @@ socket.on("ProductosGet", products=>{
             <p><strong>stock:</strong> ${product.stock}</p>
             <p><strong>thumbnails:</strong> ${product.thumbnails}</p>
         `
-        //item.textContent = ` titulo: ${product.title} - descripcion: ${product.description} - precio: ${product.price} - categoria: ${product.category} - codigo: ${product.code} - id: ${product.id} - status: ${product.status} - stock: ${product.stock} - thumbnails: ${product.thumbnails} `
         const espacio = document.createElement("hr")
         listaActualizada.appendChild(item)
         listaActualizada.appendChild(espacio)
@@ -51,31 +50,6 @@ socket.on("Product", product=>{
             <p><strong>stock:</strong> ${product.stock}</p>
             <p><strong>thumbnails:</strong> ${product.thumbnails}</p>
         `
-        //item.textContent = ` titulo: ${product.title} - descripcion: ${product.description} - precio: ${product.price} - categoria: ${product.category} - codigo: ${product.code} - id: ${product.id} - status: ${product.status} - stock: ${product.stock} - thumbnails: ${product.thumbnails} `
-        const espacio = document.createElement("hr")
-        listaActualizada.appendChild(item)
-        listaActualizada.appendChild(espacio)
-        
-})
-
-socket.on("ProductoNuevo", product=>{
-    console.log(product)
-    listaActualizada.innerHTML = ""
-    nombreListaActualizada.innerHTML=""
-    nombreListaActualizada.innerHTML=`producto agregado:`
-        const item = document.createElement("div")
-        item.innerHTML = `
-            <h2><strong>título:</strong> ${product.title}</h2>
-            <p><strong>descripción:</strong> ${product.description}</p>
-            <p><strong>precio:</strong> ${product.price}</p>
-            <p><strong>categoría:</strong> ${product.category}</p>
-            <p><strong>código:</strong> ${product.code}</p>
-            <p><strong>id:</strong> ${product.id}</p>
-            <p><strong>status:</strong> ${product.status}</p>
-            <p><strong>stock:</strong> ${product.stock}</p>
-            <p><strong>thumbnails:</strong> ${product.thumbnails}</p>
-        `
-        //item.textContent = ` titulo: ${product.title} - descripcion: ${product.description} - precio: ${product.price} - categoria: ${product.category} - codigo: ${product.code} - id: ${product.id} - status: ${product.status} - stock: ${product.stock} - thumbnails: ${product.thumbnails} `
         const espacio = document.createElement("hr")
         listaActualizada.appendChild(item)
         listaActualizada.appendChild(espacio)

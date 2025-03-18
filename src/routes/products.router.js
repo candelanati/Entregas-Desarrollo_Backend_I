@@ -131,9 +131,11 @@ router.post("/",  async(req,res)=>{
                     return res.status(400).send({ error: "Las thumbnails deben ser un array de strings"})
                 }
             }
-            
+           
         let productoNuevo = await productManager.addProduct(productoRecibido.title,productoRecibido.description,productoRecibido.code,productoRecibido.price,productoRecibido.status,productoRecibido.stock,productoRecibido.category,productoRecibido.thumbnails)
-        req.io.emit("ProductoNuevo", productoNuevo)
+        
+        let products=await productManager.getProducts()
+        req.io.emit("ProductosGet", products)
         res.status(201).json(productoNuevo)
      }catch (error){
         res.status(500).send({error:'Error en el servidor: '+error})
@@ -202,6 +204,8 @@ router.put("/:pid", async(req,res)=>{
         }
 
         const productoActualizado = await productManager.updateProduct(pid,updatedData)
+        products=await productManager.getProducts()
+        req.io.emit("ProductosGet", products)
         res.status(200).json(productoActualizado)
     }catch(error){
         res.status(500).send({error:'Error en el servidor: '+error})
@@ -217,6 +221,8 @@ router.delete("/:pid", async(req,res)=>{
             res.status(400).send('El producto a eliminar con id '+pid+' no existe')
         }
         let productsEliminado = await productManager.deleteProduct(pid)
+        
+        req.io.emit("ProductosGet", productsEliminado)
         res.status(200).json(productsEliminado)
     }catch(error){
         res.status(500).send({error:'Error en el servidor: '+error})
