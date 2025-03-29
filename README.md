@@ -2,7 +2,6 @@
 
 Este documento contiene los enunciados de las entregas realizadas durante el cursado de Desarrollo Avanzado Backend I de CODERHOUSE.
 
-# ENUNCIADO - entrega 1
 
 # **Entrega N° 1**
 
@@ -158,9 +157,9 @@ y
     
     `node_modules`
 
-# **Entrega N° 2**
+# **Entrega N° 2 - Websockets**
 
-# **Websockets**
+
 
 - Además, crear una vista “realTimeProducts.handlebars”, la cual vivirá en el endpoint “/realtimeproducts” en nuestro views router, ésta contendrá la misma lista de productos, sin embargo, ésta trabajará con websockets.
     - Al trabajar con websockets, cada vez que creemos un producto nuevo, o bien cada vez que eliminemos un producto, se debe actualizar automáticamente en dicha vista la lista.
@@ -179,7 +178,7 @@ Aspectos a incluir
 - Ya que la conexión entre una consulta HTTP y websocket no está contemplada dentro de la clase. Se recomienda que, para la creación y eliminación de un producto, Se cree un formulario simple en la vista realTimeProducts.handlebars. Para que el contenido se envíe desde websockets y no HTTP. Sin embargo, esta no es la mejor solución, leer el siguiente punto.
 - Si se desea hacer la conexión de socket emits con HTTP, deberás buscar la forma de utilizar el servidor io de Sockets dentro de la petición POST. ¿Cómo utilizarás un emit dentro del POST?
 
-# Consigna ENTREGA FINAL
+# ENTREGA FINAL
 
 Resumen de la consigna realizado con ayuda de IA.
 
