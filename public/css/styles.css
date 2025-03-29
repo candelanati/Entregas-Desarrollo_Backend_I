@@ -4,7 +4,10 @@ article {
     min-width: 32rem;
     position: fixed;
     top: -9rem;
-    right: 2rem;
+    right: -2%;
+     /* Agregar altura fija y scroll vertical */
+     max-height: 150vh; /* O la altura que prefieras */
+     overflow-y: auto;
 }
 
 body {

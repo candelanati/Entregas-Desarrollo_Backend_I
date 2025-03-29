@@ -4,7 +4,7 @@ const router = Router()
 router.get("/realtimeproducts", async(req,res)=>{
     res.render('realTimeProducts')
 })
-router.get("/home", async(req,res)=>{
+router.get("/", async(req,res)=>{
     res.render('home')
 })
 
