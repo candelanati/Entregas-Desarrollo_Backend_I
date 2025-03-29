@@ -1,3 +1,7 @@
+# ENUNCIADOS - entregas 1, 2 y entrga final
+
+Este documento contiene los enunciados de las entregas realizadas durante el cursado de Desarrollo Avanzado Backend I de CODERHOUSE.
+
 # ENUNCIADO - entrega 1
 
 # **Entrega N° 1**
@@ -153,3 +157,105 @@ y
 - Proporcionar un enlace al repositorio de GitHub con el proyecto completo, **sin** la carpeta .
     
     `node_modules`
+
+# **Entrega N° 2**
+
+# **Websockets**
+
+- Además, crear una vista “realTimeProducts.handlebars”, la cual vivirá en el endpoint “/realtimeproducts” en nuestro views router, ésta contendrá la misma lista de productos, sin embargo, ésta trabajará con websockets.
+    - Al trabajar con websockets, cada vez que creemos un producto nuevo, o bien cada vez que eliminemos un producto, se debe actualizar automáticamente en dicha vista la lista.
+
+**Consigna**
+
+- Configurar nuestro proyecto para que trabaje con Handlebars y websocket.
+
+Aspectos a incluir
+
+- Configurar el servidor para integrar el motor de plantillas Handlebars e instalar un servidor de socket.io al mismo.
+- Crear una vista “home.handlebars” la cual contenga una lista de todos los productos agregados hasta el momento
+
+**Sugerencias**
+
+- Ya que la conexión entre una consulta HTTP y websocket no está contemplada dentro de la clase. Se recomienda que, para la creación y eliminación de un producto, Se cree un formulario simple en la vista realTimeProducts.handlebars. Para que el contenido se envíe desde websockets y no HTTP. Sin embargo, esta no es la mejor solución, leer el siguiente punto.
+- Si se desea hacer la conexión de socket emits con HTTP, deberás buscar la forma de utilizar el servidor io de Sockets dentro de la petición POST. ¿Cómo utilizarás un emit dentro del POST?
+
+# Consigna ENTREGA FINAL
+
+Resumen de la consigna realizado con ayuda de IA.
+
+## 1. Modificar el método GET de products (/api/products) con:
+
+### Filtros, paginación, ordenamiento:
+
+- limit (default: 10)
+- page (default: 1)
+- query (filtro por categoría/disponibilidad, default: sin filtro)
+- sort (asc/desc por precio, default: sin ordenar si no se recibe el parámetro)
+
+***respuesta estructurada:***
+
+```jsx
+{
+	status: "success/error"
+	payload: [productos] //Resultado de los productos solicitados
+	totalPages: Number //Total de páginas
+	prevPage: Number/null //Página anterior
+	nextPage: Number/null //Página siguiente
+	page: Number //Página actual
+	hasPrevPage: Boolean //Indicador para saber si la página previa existe
+	hasNextPage: Boolean //Indicador para saber si la página siguiente existe.
+	prevLink: String/null //Link directo a la página previa (null si hasPrevPage=false)
+	nextLink: String/null //Link directo a la página siguiente (null si hasNextPage=false)
+}
+```
+
+Búsquedas:
+
+- Por categoría o disponibilidad.
+- Ordenamiento por precio (asc/desc)
+
+---
+
+## 2. Nuevos endpoints para carritos (/api/carts):
+
+- **DELETE** `/api/carts/:cid****/products/:pid`:  Eliminar un producto especifico del carrito.
+- **PUT** `/api/carts/:cid`: Actualizar el carrito con un arreglo completo de productos (body).
+- **PUT** `/api/carts/:cid****/products/:pid`:  Actualizar solo la cantidad de un producto (body:`{”quantity”: Number}`)
+- **DELETE** `/api/carts/:cid`: Vaciar el carrito (eliminar todos los productos).
+
+***Modificar el modelo de carts:***
+
+- Usar referencia a Products en el array `products`
+- Modificar la ruta `/********:cid` para que al traer los productos, se usen ***populate*** para mostrar la información correcta.
+
+---
+
+## 3. Modificaciones en las vistas (Handlebars):
+
+***Vista index.handlebars (***`/products`***):***
+
+- Mostrar productos con ***paginación*** (botones anterior/siguiente, pagina actual, etc.)
+- Cada producto debe tener **dos opciones:**
+    1.  Enlace a una vista detallada (`/products/:pid`) con:
+        - Descripción completa, precio, categoría, etc.
+        - Botón “Agregar al carrito”.
+    2. Botón “Agregar al carrito” directamente en la lista de productos.
+
+***Nueva vista cart.handlebars (***`/carts/:cid****`***):***
+
+- Listar solo los productos que pertenecen al carrito especifico.
+- Mostrar nombre, cantidad, precio y subtotal de cada producto.
+
+---
+
+## 4. Requisitos técnicos:
+
+- Usar MongoDB como persistencia principal.
+- Mantener la lógica de negocio existente (solo cambiar la persistencia).
+- Los nuevos endpoints deben seguir la misma estructura y convenciones ya usadas.
+- No incluir node_modules en el repositorio.
+- Usar populate en los carritos para traer los productos completos.
+- Formato de entrega:
+    - Subir el proyecto a GitHub
+    - Incluir video explicativo sobre la implementación.
+- Sugerencia: Agregar comentarios en el código para explicar los cambios
