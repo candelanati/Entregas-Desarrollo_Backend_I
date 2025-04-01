@@ -7,6 +7,7 @@ const viewsRouter = require('./routes/views.router.js')
 const { ProductsManager } = require('./dao/productsManager.js')
 const { validacionesPost } = require('./utilities/validationsPost.js')
 const productManager = new ProductsManager("./src/data/products.json")
+const conectarDB =  require ('./usoDB.js')
 
 const app = express()
 
@@ -70,5 +71,9 @@ io.on("connection", async(socket)=>{
             socket.emit("validationError", validationRes) // Emite el error 
         }
     })
-    
 })
+
+conectarDB(
+    "mongodb+srv://candelanati:m7C4z5uUBTehc0tr@cluster0.lbuepi2.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0",
+    "Entrega-Final-Back-I"
+)

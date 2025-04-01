@@ -1,4 +1,3 @@
-
 function renderProducts(products){
         console.log("renderProducts")
         
