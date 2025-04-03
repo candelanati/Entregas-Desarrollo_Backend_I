@@ -1,36 +1,24 @@
 const {Router} = require("express")
-const {CartManager}=require("../dao/cartManager.js")
-const cartManager = new CartManager("./src/data/cart.json")
+const {CartManagerMongo}=require("../dao/cartManagerMongo.js")
+const cartManager = new CartManagerMongo()
 const { ProductsManager }=require("../dao/productsManager.js")
+const cartsModel = require("../dao/models/cartsModel.js")
 const productManager = new ProductsManager("./src/data/products.json")
-
+const {isValidObjectId} = require('mongoose')
 const router = Router()
 
-router.get("/", async(req,res)=>{
-	let carts=await cartManager.getCart()
-    //limit
-    let {limit}=req.query
-    if(limit){
-        limit=Number(limit)
-        if(isNaN(limit)){
-            return res.send("Error: ingrese un limit numérico")
-        }
-        carts=carts.slice(0, limit)
-    }
-	res.status(200).json(carts)
-})
 
+//chequear
 router.get("/:cid",async(req,res)=>{
-    let carts=await cartManager.getCart()
     let {cid}=req.params
-    let cart=carts.find(c=>c.id==cid)
+    let cart = await cartsModel.findById(cid).lean()
     //validacion
     if(!cart){
         return res.status(404).send({error:'no existen carritos con id: '+cid})
     }
     res.status(200).json(cart)
 })
-
+//ARREGLAR
 router.post("/",  async(req,res)=>{
     try{ 
         let {products}=req.body
@@ -76,26 +64,67 @@ router.post("/",  async(req,res)=>{
     }
 })
 
+//chequear
 router.post("/:cid/product/:pid", async(req,res)=>{
     try{
         let {cid,pid}=req.params
-        let carts = await cartManager.getCart()
-        let cartEncontrado=carts.find(c=>c.id==cid)
-        if(!cartEncontrado){
-            res.status(404).send("carrito con id " +cid+" no encontrado")
-        }
-        let productEncontrado=cartEncontrado.products.find(p=>p.product==pid)
-        console.log(productEncontrado)
-        if(!productEncontrado){
-            cartEncontrado.products.push({product:Number(pid),quantity:1})
-        }else{
-            productEncontrado.quantity+=1
+        //busca cid
+        let carrito = await cartsModel.findById(cid)
+        if(!carrito){
+            return res.status(404).send("carrito con id " +cid+" no encontrado")
         }
         
-        let cartActualizado = await cartManager.updateCart(cartEncontrado)
+        // Buscar si el producto ya está en el carrito
+        let productIndex = carrito.products.findIndex(p => p.product.toString() === pid);
+
+        if (productIndex === -1) {
+            // Si el producto no existe, lo agregamos con cantidad 1
+            await cartsModel.findByIdAndUpdate(cid, {
+                $push: { products: { product: pid, quantity: 1 }}
+            },{new:true,upsert: false });
+        }else {
+            // Si el producto ya existe, incrementamos la cantidad en 1
+            await cartsModel.findOneAndUpdate(
+                { _id: cid, "products.product": pid },
+                { $inc: { "products.$.quantity": 1 } },
+                {new:true }
+            );
+        }
+        
+        let cartActualizado = await cartsModel.findById(cid).lean()
         res.status(201).json(cartActualizado)
     }catch(error){
         res.status(500).send({error:"Error en el servidor "+error})
+    }
+})
+
+router.put('/:cid', async(req,res)=>{
+    try {
+        let {cid} = req.params
+        let aActualizar=req.body
+        let position = await cartsModel.findById(cid)
+        //validacion existencia cart con cid
+        if(!position){
+            return res.status(400).json({error:'no existen carritos con id: '+cid})
+        }
+        //para actualizar:
+            //chequea que se hayan enviado productos
+            if(!aActualizar.products || !Array.isArray(aActualizar.products)){
+                return res.status(400).json({error:'Por favor, envie un Array de productos para actualizar el carrito con id: '+cid})
+            }
+            //chequea id validos
+            for(let element of aActualizar.products){
+                if(!isValidObjectId(element.product)){
+                    return res.status(400).json({error:"No existe un producto con id "+element.product+". Por favor, ingrese productos con id validos para actualizar."})
+                }
+                if(typeof element.quantity !=='number'||element.quantity<0){
+                    return res.status(400).json({error:"La cantidad debe ser un numero mayor o igual a 0. Cantidad ingresada: "+element.quantity+" para el producto con id: "+element.product})
+                }
+            }
+        let cartActualizado = await cartManager.update(cid,aActualizar)
+        res.status(200).json(cartActualizado)
+    } catch (error) {
+        res.status(500).json({error:"Error en el servidor: "+error.message})
     }
 })
 

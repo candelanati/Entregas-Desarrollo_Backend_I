@@ -1,3 +1,5 @@
+const cartsModel = require("./models/cartsModel");
+
 class CartManager{
 
     async get(){
@@ -11,36 +13,19 @@ class CartManager{
         }
 
     async save(products){
-        let cart = await this.getCart()
-        let id = 1
-        if (cart.length>0){
-            id=Math.max(...cart.map(el=>el.id))+1
-        }
-        let productsCart = products.map(p=>({
-            product:p.id,
-            quantity:1
-        }))
-
-        console.log(productsCart)
-
-        let newCart={
-            id,
-            products
-        }
-
-        cart.push(newCart)
-        await fs.promises.writeFile(this.path, JSON.stringify(cart, null, "\t"))
-        return newCart
+        
+        let nuevoCart = await cartsModel.create({products})
+        
+        cart.push(nuevoCart)
+        return nuevoCart
     }
 
-    async update(cartEncontrado){
-        let carts = await this.getCart()
-        let position = carts.findIndex(cart=>cart.id===cartEncontrado.id)
-        if(position!==-1){
-            carts[position]=cartEncontrado
+    async update(id,productsModificados){
+        let position = await cartsModel.findById(id)
+        if(position){
+            let productoActualizado = await cartsModel.findByIdAndUpdate(id,{products:productsModificados, new:true})
         }
-        await fs.promises.writeFile(this.path, JSON.stringify(carts, null, "\t"))
-        return carts[position]
+        return productoActualizado
     }
 
 }

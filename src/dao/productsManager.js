@@ -19,7 +19,6 @@ class ProductsManager{
         if (products.length>0){
             id=Math.max(...products.map(el=>el.id))+1
         }
-        
 
         let newProduct={
             id,
