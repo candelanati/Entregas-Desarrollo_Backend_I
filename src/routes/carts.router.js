@@ -102,25 +102,48 @@ router.put('/:cid', async(req,res)=>{
     try {
         let {cid} = req.params
         let aActualizar=req.body
-        let position = await cartsModel.findById(cid)
-        //validacion existencia cart con cid
-        if(!position){
-            return res.status(400).json({error:'no existen carritos con id: '+cid})
+
+        if (!aActualizar.products || !Array.isArray(aActualizar.products)) {
+            return res.status(400).json({
+                error: 'Por favor, envíe un array de productos para actualizar el carrito con id: ' + cid
+            });
         }
-        //para actualizar:
-            //chequea que se hayan enviado productos
-            if(!aActualizar.products || !Array.isArray(aActualizar.products)){
-                return res.status(400).json({error:'Por favor, envie un Array de productos para actualizar el carrito con id: '+cid})
+
+        for (let element of aActualizar.products) {
+            if (!isValidObjectId(element.product)) {
+                return res.status(400).json({
+                    error: "No existe un producto con id " + element.product + 
+                           ". Por favor, ingrese productos con id válidos para actualizar."
+                });
             }
-            //chequea id validos
-            for(let element of aActualizar.products){
-                if(!isValidObjectId(element.product)){
-                    return res.status(400).json({error:"No existe un producto con id "+element.product+". Por favor, ingrese productos con id validos para actualizar."})
-                }
-                if(typeof element.quantity !=='number'||element.quantity<0){
-                    return res.status(400).json({error:"La cantidad debe ser un numero mayor o igual a 0. Cantidad ingresada: "+element.quantity+" para el producto con id: "+element.product})
-                }
+            if (typeof element.quantity !== 'number' || element.quantity < 0) {
+                return res.status(400).json({
+                    error: "La cantidad debe ser un número mayor o igual a 0. " +
+                           "Cantidad ingresada: " + element.quantity + 
+                           " para el producto con id: " + element.product
+                });
             }
+        }
+
+        // let position = await cartsModel.findById(cid)
+        // //validacion existencia cart con cid
+        // if(!position){
+        //     return res.status(400).json({error:'no existen carritos con id: '+cid})
+        // }
+        // //para actualizar:
+        //     //chequea que se hayan enviado productos
+        //     if(!aActualizar.products || !Array.isArray(aActualizar.products)){
+        //         return res.status(400).json({error:'Por favor, envie un Array de productos para actualizar el carrito con id: '+cid})
+        //     }
+        //     //chequea id validos
+        //     for(let element of aActualizar.products){
+        //         if(!isValidObjectId(element.product)){
+        //             return res.status(400).json({error:"No existe un producto con id "+element.product+". Por favor, ingrese productos con id validos para actualizar."})
+        //         }
+        //         if(typeof element.quantity !=='number'||element.quantity<0){
+        //             return res.status(400).json({error:"La cantidad debe ser un numero mayor o igual a 0. Cantidad ingresada: "+element.quantity+" para el producto con id: "+element.product})
+        //         }
+        //     }
         let cartActualizado = await cartManager.update(cid,aActualizar)
         res.status(200).json(cartActualizado)
     } catch (error) {
