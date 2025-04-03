@@ -22,5 +22,4 @@ function renderProducts(products){
             listaDesactualizada.appendChild(espacio)
             
         });
-    
 }

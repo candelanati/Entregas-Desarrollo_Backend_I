@@ -4,9 +4,12 @@ const {engine}=require('express-handlebars')
 const routerProducts = require("./routes/products.router.js")
 const routerCarts = require("./routes/carts.router.js")
 const viewsRouter = require('./routes/views.router.js')
-const { ProductsManager } = require('./dao/productsManager.js')
+
+const { ProductsManagerMongo } = require('./dao/productsManagerMongo.js');  
+const productManager = new ProductsManagerMongo(); 
+
 const { validacionesPost } = require('./utilities/validationsPost.js')
-const productManager = new ProductsManager("./src/data/products.json")
+
 const conectarDB =  require ('./usoDB.js')
 
 const app = express()
@@ -54,16 +57,16 @@ io=new Server(serverHTTP)  //servidor de websocket montado sobre servidor HTTP
 //websockets para realTimeProducts
 io.on("connection", async(socket)=>{
     console.log("cliente conectado a websockets")
-    let productos = await productManager.getProducts()
+    let productos = await productManager.get()
     socket.emit("updateProducts", productos)
     socket.emit("ProductosGet",productos)
     socket.on("nuevoProducto", async (title,description,code,price,status,stock,category,thumbnails) => {
-        let productosExistentes = await productManager.getProducts()
+        let productosExistentes = await productManager.get()
         let productoNuevo = {title,description,code,price,status,stock,category,thumbnails}
         let validationRes = validacionesPost(productosExistentes,productoNuevo)
         if(validationRes === ''){
-            io.emit("nuevoProducto", await productManager.addProduct(title,description,code,price,status,stock,category,thumbnails))
-            let productos = await productManager.getProducts()
+            io.emit("nuevoProducto", await productManager.save({title,description,code,price,status,stock,category,thumbnails}))
+            let productos = await productManager.get()
             socket.emit("updateProducts",productos)
             socket.emit("validationError", validationRes)
         }
