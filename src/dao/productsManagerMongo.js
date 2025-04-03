@@ -9,7 +9,8 @@ class ProductsManagerMongo{
             return []
         }
         let productos =  (await productsModel.find().lean()) // .lean() para deshidratar
-        console.log("productos"+productos);
+        // console.log("productos desde get en productsManagerMongo: ")
+        // console.log(productos);
         return productos
     }
 

@@ -1,6 +1,5 @@
 const {Router} = require("express")
 
-
 // const { renderProducts } = require("../utilities/listaDesactualizada.js")
 const { ProductsManagerMongo } = require("../dao/productsManagerMongo.js")
 const productManager =  new ProductsManagerMongo()
@@ -15,14 +14,13 @@ router.get('/',async(req,res)=>{
     try {
         let products = await productManager.get()
         req.io.emit("ProductosGet", products)
-        console.log(products)
+        // console.log(products)
         res.setHeader('Content-Type','application/json')
 		res.status(200).json({products})
     } catch (error) {
         procesaErrores(error,res)
     }
 })
-
 
 router.get('/:pid',async(req,res)=>{
     let {pid}=req.params
@@ -42,9 +40,6 @@ router.get('/:pid',async(req,res)=>{
 		procesaErrores(error,res)
     }
 })
-
-
-
 
 router.post("/",  async(req,res)=>{
     try{ 
@@ -83,7 +78,7 @@ router.post("/",  async(req,res)=>{
             }
 
             //completar keys
-            const requiredFields = ["title", "description", "code", "price", "stock", "category"];
+            const requiredFields = ["title", "description", "code", "price", "stock", "category","thumbnails","status"];
             for (let field of requiredFields) {
                 if (!productoRecibido[field]) {
                     return res.status(400).json({ error: `Complete el campo: ${field}` });
@@ -127,7 +122,6 @@ router.post("/",  async(req,res)=>{
     }
 })
 
-
 router.put("/:pid", async(req,res)=>{
     try{
         const {pid}=req.params
@@ -155,59 +149,56 @@ router.put("/:pid", async(req,res)=>{
             category: req.body.category,
             thumbnails:  req.body.thumbnails
         }
-        if (productoRecibido.title === undefined) {
-            return res.status(400).send({ error: "El título es un campo obligatorio" });
-        } else if (typeof productoRecibido.title !== "string" || !productoRecibido.title.trim()) {
-            return res.status(400).send({ error: "El título debe ser un string no vacío" });
+        if (productoRecibido.title !== undefined) {
+            if (typeof productoRecibido.title !== "string" || !productoRecibido.title.trim()) {
+                return res.status(400).send({ error: "El título debe ser un string no vacío" });
+            }
         }
         
-        if (productoRecibido.description === undefined) {
-            return res.status(400).send({ error: "La descripción es un campo obligatorio" });
-        } else if (typeof productoRecibido.description !== "string" || !productoRecibido.description.trim()) {
-            return res.status(400).send({ error: "La descripción debe ser un string no vacío" });
+        if (productoRecibido.description !== undefined) {
+            if (typeof productoRecibido.description !== "string" || !productoRecibido.description.trim()) {
+                return res.status(400).send({ error: "La descripción debe ser un string no vacío" });
+            }
+        }   
+        
+        if (productoRecibido.code !== undefined) {
+            if(typeof productoRecibido.code !== "string" || !productoRecibido.code.trim()) {
+                return res.status(400).send({ error: "El código debe ser un string no vacío" });
+            }
         }
         
-        if (productoRecibido.code === undefined) {
-            return res.status(400).send({ error: "El código es un campo obligatorio" });
-        } else if (typeof productoRecibido.code !== "string" || !productoRecibido.code.trim()) {
-            return res.status(400).send({ error: "El código debe ser un string no vacío" });
-        }
-        
-        if (req.body.price === undefined) {
-            return res.status(400).send({ error: "El precio es un campo obligatorio" });
-        } else {
+        if (req.body.price !== undefined) {
             const price = Number(req.body.price);
             if (isNaN(price) || price <= 0) {
                 return res.status(400).send({ error: "El precio debe ser un número mayor a 0" });
             }
         }
         
-        if (req.body.status === undefined) {
-            return res.status(400).send({ error: "El estado es un campo obligatorio" });
-        } else if (typeof productoRecibido.status !== "boolean") {
-            return res.status(400).send({ error: "El estado debe ser un booleano (true o false)" });
+        if (req.body.status !== undefined) {
+            if (typeof productoRecibido.status !== "boolean") {
+                return res.status(400).send({ error: "El estado debe ser un booleano (true o false)" });
+            }
         }
         
-        if (req.body.stock === undefined) {
-            return res.status(400).send({ error: "El stock es un campo obligatorio" });
-        } else {
+        if (req.body.stock !== undefined) {
             const stock = Number(req.body.stock);
             if (isNaN(stock) || stock < 0) {
                 return res.status(400).send({ error: "El stock debe ser un número mayor o igual a 0" });
             }
         }
         
-        if (productoRecibido.category === undefined) {
-            return res.status(400).send({ error: "La categoría es un campo obligatorio" });
-        } else if (typeof productoRecibido.category !== "string" || !productoRecibido.category.trim()) {
-            return res.status(400).send({ error: "La categoría debe ser un string no vacío" });
+        if (productoRecibido.category !== undefined) {
+            if (typeof productoRecibido.category !== "string" || !productoRecibido.category.trim()) {
+                return res.status(400).send({ error: "La categoría debe ser un string no vacío" });
+            }
         }
         
-        if (productoRecibido.thumbnails === undefined) {
-            return res.status(400).send({ error: "Las thumbnails son un campo obligatorio" });
-        } else if (!Array.isArray(productoRecibido.thumbnails) || !productoRecibido.thumbnails.every(el => typeof el === "string")) {
-            return res.status(400).send({ error: "Las thumbnails deben ser un array de strings" });
+        if (productoRecibido.thumbnails !== undefined) {
+            if (!Array.isArray(productoRecibido.thumbnails) || !productoRecibido.thumbnails.every(el => typeof el === "string")) {
+                return res.status(400).send({ error: "Las thumbnails deben ser un array de strings" });
+            }
         }
+
         const productoActualizado = await productManager.update(pid,updatedData)
         products=await productManager.get()
         req.io.emit("ProductosGet", products)
@@ -232,6 +223,5 @@ router.delete("/:pid", async(req,res)=>{
         res.status(500).json({error:'Error en el servidor: '+error.message})
     }
 })
-
 
 module.exports=router

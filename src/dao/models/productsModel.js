@@ -14,12 +14,17 @@ const productsSchema = new mongoose.Schema(
         code:{
             type:String,
             required:true, 
-            unique:true
+            unique:true //unico code por producto
         },
         price:{
             type:Number,
             required:true,
-            min:0
+            min:0 //el precio no puede ser un numero negativo
+        },
+        status:{
+            type:Boolean,
+            required:true,
+            default:true //por defecto activos
         },
         stock:{
             type:Number,

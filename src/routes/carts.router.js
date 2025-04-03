@@ -1,6 +1,6 @@
 const {Router} = require("express")
-const {CartManagerMongo}=require("../dao/cartManagerMongo.js")
-const cartManager = new CartManagerMongo()
+const {CartManager}=require("../dao/cartManagerMongo.js")
+const cartManager = new CartManager()
 const { ProductsManager }=require("../dao/productsManager.js")
 const cartsModel = require("../dao/models/cartsModel.js")
 const productManager = new ProductsManager("./src/data/products.json")
