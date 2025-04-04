@@ -1,0 +1,14 @@
+<div class="vista-detallada">
+    <h2>{{producto.title}}</h2>
+    <div class="div-imagenes-producto-vista-detallada">
+        {{#each producto.thumbnails}}
+            <img src="{{this}}" alt="imagen del producto" class="imagenes-producto-vista-detallada">
+        {{/each}}
+    </div>
+    <p>{{producto.description}}</p>
+    <p>Categoría: {{producto.category}}</p>
+    <p>Precio: ${{producto.price}}</p>
+    <form method="POST" action="/api/carts/:cid/product/{{producto._id}}">
+    <button type="submit" class="agregar-al-carrito-detalle">Agregar al carrito</button>
+    </form>
+</div>

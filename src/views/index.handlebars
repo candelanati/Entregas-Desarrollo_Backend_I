@@ -1,0 +1,36 @@
+<h1 class="titulo-div-cards-productos">Productos</h1>
+<div class="div-cards-productos">
+{{#each products}}
+  <div class="card-producto">
+    <h3 class="titulo-card-producto">{{this.title}}</h3>
+    {{!-- <p class="descripcion-card-producto">{{this.description}}</p> --}}
+    <p>${{this.price}}</p>
+    <a href="/products/{{this._id}}" class="boton-ver-mas">Ver detalle</a>
+    
+    {{!-- activa o desactiva el boton agregar a carrito --}}
+        {{#if this.status}}
+            <form method="POST" action="/api/carts/{{cartId}}/product/{{this._id}}">
+                <button type="submit">Agregar al carrito</button>
+            </form>
+        {{else}}
+            <form>
+                <button type="submit" disabled style="background-color: grey; cursor: not-allowed;" class="producto-no-disponible">
+                Producto no disponible
+                </button>
+            </form>
+        {{/if}}
+
+  </div>
+{{/each}}
+</div>
+<div class="div-paginado">
+  {{#if hasPrevPage}}
+    <a href="/products?page={{prevPage}}" class="botones-anterior-siguiente">Anterior</a>
+  {{/if}}
+
+  Página {{page}}
+
+  {{#if hasNextPage}}
+    <a href="/products?page={{nextPage}}" class="botones-anterior-siguiente">Siguiente</a>
+  {{/if}}
+</div>
