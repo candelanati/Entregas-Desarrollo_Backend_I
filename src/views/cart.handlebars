@@ -31,24 +31,24 @@
     document.addEventListener("DOMContentLoaded", () => {
         document.querySelectorAll(".eliminar-producto-carrito").forEach(button => {
             button.addEventListener("click", async (event) => {
-            event.preventDefault(); // Evita que el enlace recargue la página
+                event.preventDefault(); // Evita que el enlace recargue la página
 
-            const cartId = event.target.dataset.cart;
-            const productId = event.target.dataset.product;
+                const cartId = event.target.dataset.cart;
+                const productId = event.target.dataset.product;
 
-            const response = await fetch(`/api/carts/${cartId}/product/${productId}`, {
-                method: "DELETE",
-                headers: {
-                "Content-Type": "application/json"
+                const response = await fetch(`/api/carts/${cartId}/product/${productId}`, {
+                    method: "DELETE",
+                    headers: {
+                    "Content-Type": "application/json"
+                    }
+                });
+
+                if (response.ok) {
+                    alert("Producto eliminado del carrito. ✔️");
+                    window.location.reload(); // Recarga la página para actualizar la vista
+                } else {
+                    alert("❌ Error al eliminar el producto.");
                 }
-            });
-
-            if (response.ok) {
-                alert("Producto eliminado del carrito. ✔️");
-                window.location.reload(); // Recarga la página para actualizar la vista
-            } else {
-                alert("❌ Error al eliminar el producto.");
-            }
             });
         });
 });
