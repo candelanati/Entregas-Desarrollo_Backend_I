@@ -50,7 +50,7 @@ body {
 }
 .titulo-div-cards-productos{
     margin-bottom:80px;
-    margin-top: 100px;
+    margin-top: 150px;
 }
 .boton-ver-mas{
     border: 2px;
@@ -128,6 +128,7 @@ nav{
     display: flex;
     flex-wrap: wrap;
     gap: 100px;
+    width: 100vw;
     justify-content: center;
     align-items: center;
     flex-direction: row;
@@ -182,7 +183,7 @@ nav{
     font-weight: 600;
 }
 .filtro-categorias{
-    width: 600px;
+    width: 400px;
     overflow: hidden;
     display: flex;
     flex-wrap: wrap;
