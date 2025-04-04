@@ -267,3 +267,39 @@ nav{
 .total-carrito{
     justify-self: end;
 }
+
+.button-ver-carrito{
+    position: fixed;
+    right: 10px;
+    top: 190px;
+    background-color:#0172ad;
+    color:#cfd0d2;
+    text-decoration: none;
+    border: 1px;
+    border-radius: 10px;
+    width: 150px;
+    height: 60px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size:larger;
+    font-weight: 600;
+}
+
+.button-volver-a-productos{
+    position: fixed;
+    right: 10px;
+    top: 20px;
+    background-color:#0172ad;
+    color:#cfd0d2;
+    text-decoration: none;
+    border: 1px;
+    border-radius: 10px;
+    width: 250px;
+    height: 60px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size:larger;
+    font-weight: 600;
+}

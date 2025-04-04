@@ -75,8 +75,12 @@ router.get('/products/:pid', async (req, res) => {
         if (!producto) {
             return res.status(404).send('Producto no encontrado');
         }
-    
-        res.render('productDetail', { producto });
+        
+        // También pasamos el carrito por defecto (su ID) para usarlo en botones de "Agregar al carrito"
+        const defaultCartId = "67eef5807fa2ca2bef6c9114";
+
+
+        res.render('productDetail', { producto,  defaultCartId});
     } catch (error) {
         console.error(error);
         res.status(500).send('Error en el servidor');

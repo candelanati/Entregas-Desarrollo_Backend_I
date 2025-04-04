@@ -53,8 +53,10 @@
         </div>
     </div>
   </div>
+  
 </nav>
 
+<a href="/carts/67eef5807fa2ca2bef6c9114" class="button-ver-carrito">Ver carrito</a>
 <h1 class="titulo-div-cards-productos">Productos</h1>
 <div class="div-cards-productos">
 {{#each products}}
@@ -66,7 +68,7 @@
     
     {{!-- activa o desactiva el boton agregar a carrito --}}
         {{#if this.status}}
-            <form method="POST" action="/api/carts/{{../defaultCartId}}/product/{{this._id}}">
+            <form class="form-agregar" data-cid="{{../defaultCartId}}" data-pid="{{this._id}}">
                 <button type="submit">Agregar al carrito</button>
             </form>
         {{else}}
@@ -92,3 +94,30 @@
     {{/if}}
 </div>
 
+<script>
+    console.log("script activo")
+  document.querySelectorAll('.form-agregar').forEach(form => {
+    form.addEventListener('submit', function (e) {
+      e.preventDefault(); // Evita que recargue/redirija
+
+      const cid = this.dataset.cid;
+      const pid = this.dataset.pid;
+
+      fetch(`/api/carts/${cid}/product/${pid}`, {
+        method: 'POST'
+      })
+      .then(res => {
+        if (!res.ok) throw new Error("Error al agregar");
+        return res.json();
+      })
+      .then(data => {
+        alert('🛒 Producto agregado al carrito por default✔️\n➡️ Para ver el carrito, presione el boton: "Ver carrito"\n(El boton se encuentra arriba a la izquierda, debajo de la nav)');
+        // Si querés, podés actualizar un contador de carrito acá
+      })
+      .catch(err => {
+        console.error(err);
+        alert("❌ Error al agregar al carrito");
+      });
+    });
+  });
+</script>

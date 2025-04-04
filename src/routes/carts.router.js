@@ -71,10 +71,10 @@ router.post("/:cid/product/:pid", async(req,res)=>{
     try{
         let {cid,pid}=req.params
         //valida ids
-        if (!isValidObjectId(cid) ) {
+        if (!mongoose.Types.ObjectId.isValid(cid) ) {
             return res.status(400).json({ error: "ID de cart inválido. Por favor ingrese un id de carrito valido." })
         }
-        if(!isValidObjectId(pid)){
+        if(!mongoose.Types.ObjectId.isValid(pid)){
             return res.status(400).json({ error: "ID de producto inválido. Por favor ingrese un id de producto valido." })
         }
 
