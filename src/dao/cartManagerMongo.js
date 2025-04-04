@@ -13,7 +13,6 @@ class CartManager{
 
     async save(products){
         let nuevoCart = await cartsModel.create({products})
-        cart.push(nuevoCart)
         return nuevoCart
     }
 
