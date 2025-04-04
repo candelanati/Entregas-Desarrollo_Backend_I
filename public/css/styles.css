@@ -205,7 +205,6 @@ nav{
     align-items: center;
 }
 
-
 .filtros-nav>.filtro-categorias>.nombre-y-borrar>p{
     color: #10141b;
     font-size: large;
@@ -302,4 +301,21 @@ nav{
     align-items: center;
     font-size:larger;
     font-weight: 600;
+}
+
+.eliminar-producto-carrito{
+    width: 100px;
+    height: 35px;
+    margin-top:  10px;
+    color: #10141b;
+    text-decoration: none;
+    background-color: #cfd0d2;
+    border: 1px;
+    border-radius: 0.25rem;
+    padding-inline: 5px;
+    padding-block: 2px;
+    font-size: medium;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }

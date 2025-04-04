@@ -84,13 +84,13 @@
 </div>
 <div class="div-paginado">
     {{#if hasPrevPage}}
-        <a href="/products?page={{prevPage}}" class="botones-anterior-siguiente">Anterior</a>
+        <a href="/products?page={{prevPage}}{{#if category}}&category={{category}}{{/if}}{{#if status}}&status={{status}}{{/if}}{{#if sort}}&sort={{sort}}{{/if}}" class="botones-anterior-siguiente">Anterior</a>
     {{/if}}
 
     Página {{page}}
 
     {{#if hasNextPage}}
-        <a href="/products?page={{nextPage}}" class="botones-anterior-siguiente">Siguiente</a>
+        <a href="/products?page={{nextPage}}{{#if category}}&category={{category}}{{/if}}{{#if status}}&status={{status}}{{/if}}{{#if sort}}&sort={{sort}}{{/if}}" class="botones-anterior-siguiente">Siguiente</a>
     {{/if}}
 </div>
 
