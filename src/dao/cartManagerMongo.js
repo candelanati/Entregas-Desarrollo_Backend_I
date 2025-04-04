@@ -2,13 +2,13 @@ const cartsModel = require("./models/cartsModel");
 
 class CartManager{
     async get(){
-        if(!productsModel){
-            console.log("modelo de productos no definido");
+        if(!cartsModel){
+            console.log("modelo de carritos no definido");
             return []
         }
-        let productos =  (await productsModel.find().lean()) // .lean() para deshidratar
-        console.log("productos"+productos);
-        return productos
+        let carritos =  (await cartsModel.find().lean()) // .lean() para deshidratar
+        console.log("carritos"+carritos);
+        return carritos
     }
 
     async save(products){
@@ -24,6 +24,11 @@ class CartManager{
         }
         let productoActualizado = await cartsModel.findByIdAndUpdate(id,{products:productsModificados.products}, {new:true})
         return productoActualizado
+    }
+
+    async delete(id){
+        console.log("eliminando producto con id "+id);
+        return await cartsModel.findByIdAndDelete(id).lean()
     }
 }
 module.exports={

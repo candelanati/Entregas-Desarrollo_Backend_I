@@ -175,6 +175,56 @@ router.put('/:cid/products/:pid',async(req,res)=>{
     }
 })
 
+router.delete('/:cid', async(req,res)=>{
+    try{
+        const {cid} = req.params
+        //validacion cid
+        if(!isValidObjectId(cid)){
+            return res.status(400).send({error:"Id no valido. Por favor, introduzca un id valido para carrito."})
+        }
+        let cart= await cartsModel.findById(cid).lean()
+        if(!cart){
+            return res.status(400).send('El carrito a eliminar con id '+cid+' no existe')
+        }
+        let resultado = await cartManager.delete(cid)
+        console.log("resultado eliminacion: "+resultado);
+        let cartEliminado = await cartManager.get()
+        res.status(200).json(cartEliminado)
+    }catch(error){
+        res.status(500).json({error:'Error en el servidor: '+error.message})
+    }
+})
 
+router.delete('/:cid/product/:pid', async(req,res)=>{
+    try {
+        const {cid,pid} = req.params
+        //validacion IDs
+        if(!isValidObjectId(cid)){
+            return res.status(400).send({error:"Id no valido. Por favor, introduzca un id valido para carrito."})
+        }
+        if(!isValidObjectId(pid)){
+            return res.status(400).send({error:"Id no valido. Por favor, introduzca un id valido para producto."})
+        }
+
+        //buscar carrito en la BD
+        const carrito = await cartsModel.findById(cid);
+        if (!carrito) {
+            return res.status(404).send({ error: `No se encontró un carrito con ID ${cid}` });
+        }
+
+        //buscar el indice del producto en el carrito
+        let productoIndex = carrito.products.findIndex(p => p.product.toString() === pid)
+        if(productoIndex===-1){
+            return res.status(400).json({error:"No existe un producto con id: "+pid+" en el carrito con id: "+cid+". Por favor, ingrese un producto existente."})
+        }
+        //elimina el producto
+        carrito.products.splice(productoIndex, 1)
+        const carritoActualizado = await carrito.save()
+        
+        res.status(200).json({carritoActualizado})
+    } catch (error) {
+        res.status(500).json({error:"Error en el servidor: "+error.message})
+    }
+})
 
 module.exports=router
