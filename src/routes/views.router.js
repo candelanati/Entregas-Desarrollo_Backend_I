@@ -1,5 +1,7 @@
 const {Router} = require("express")
 const productsModel = require("../dao/models/productsModel")
+const { isValidObjectId } = require("mongoose")
+const cartsModel = require("../dao/models/cartsModel")
 const router = Router()
 
 router.get("/realtimeproducts", async(req,res)=>{
@@ -40,6 +42,8 @@ router.get('/products',async(req,res)=>{
             lean: true
         });
 
+        const defaultCartId = "67eef5807fa2ca2bef6c9114";
+
         res.render('index', {
             products: resultado.docs,
             hasPrevPage: resultado.hasPrevPage,
@@ -49,7 +53,8 @@ router.get('/products',async(req,res)=>{
             page: resultado.page,
             category,  // Pasamos category a la vista
             status,    // Pasamos status a la vista
-            sort       // Pasamos sort a la vista
+            sort,       // Pasamos sort a la vista
+            defaultCartId //id de carrito default para post de productos desde la vista /products
         });
         
     } catch (error) {
@@ -58,9 +63,49 @@ router.get('/products',async(req,res)=>{
 })
 
 router.get('/products/:pid', async (req, res) => {
-    const { pid } = req.params
-    const producto = await productsModel.findById(pid).lean()
-    res.render('productDetail', { producto })
-  })
+    const { pid } = req.params;
 
+    // Validación del ObjectId
+    if (!isValidObjectId(pid)) {
+      return res.status(400).send('ID de producto inválido');
+    }
+  
+    try {
+        const producto = await productsModel.findById(pid).lean();
+        if (!producto) {
+            return res.status(404).send('Producto no encontrado');
+        }
+    
+        res.render('productDetail', { producto });
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Error en el servidor');
+    }
+})
+
+router.get('/carts/:cid',async(req,res)=>{
+    const { cid } = req.params
+
+    if (!isValidObjectId(cid)) {
+        return res.status(400).send('ID de carrito inválido')
+    }
+
+    try {
+        const cart = await cartsModel.findById(cid).populate("products.product").lean()
+        if (!cart) {
+            return res.status(404).send("Carrito no encontrado")
+        }
+
+        // También pasamos el carrito por defecto (su ID) para usarlo en botones de "Agregar al carrito"
+        const defaultCartId = "67eef5807fa2ca2bef6c9114";
+
+        res.render("cart", {
+            cart,
+            defaultCartId
+        });
+    } catch (error) {
+        console.error(error)
+        res.status(500).send("Error en el servidor"+error.message)
+    }
+})
 module.exports=router

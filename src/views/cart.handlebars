@@ -1,0 +1,27 @@
+<h1>Carrito</h1>
+
+{{#if cart.products.length}}
+  <table>
+    <thead>
+      <tr>
+        <th>Producto</th>
+        <th>Cantidad</th>
+        <th>Precio unitario</th>
+        <th>Subtotal</th>
+      </tr>
+    </thead>
+    <tbody>
+      {{#each cart.products}}
+        <tr>
+          <td>{{this.product.title}}</td>
+          <td>{{this.quantity}}</td>
+          <td>${{this.product.price}}</td>
+          <td>${{multiply this.quantity this.product.price}}</td>
+        </tr>
+      {{/each}}
+    </tbody>
+  </table>
+  <h2 class="total-carrito">Total: ${{total cart.products}}</h2>
+{{else}}
+  <p>El carrito está vacío.</p>
+{{/if}}

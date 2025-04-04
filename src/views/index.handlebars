@@ -66,7 +66,7 @@
     
     {{!-- activa o desactiva el boton agregar a carrito --}}
         {{#if this.status}}
-            <form method="POST" action="/api/carts/{{cartId}}/product/{{this._id}}">
+            <form method="POST" action="/api/carts/{{../defaultCartId}}/product/{{this._id}}">
                 <button type="submit">Agregar al carrito</button>
             </form>
         {{else}}
@@ -81,14 +81,14 @@
 {{/each}}
 </div>
 <div class="div-paginado">
-  {{#if hasPrevPage}}
-    <a href="/products?page={{prevPage}}" class="botones-anterior-siguiente">Anterior</a>
-  {{/if}}
+    {{#if hasPrevPage}}
+        <a href="/products?page={{prevPage}}" class="botones-anterior-siguiente">Anterior</a>
+    {{/if}}
 
-  Página {{page}}
+    Página {{page}}
 
-  {{#if hasNextPage}}
-    <a href="/products?page={{nextPage}}" class="botones-anterior-siguiente">Siguiente</a>
-  {{/if}}
+    {{#if hasNextPage}}
+        <a href="/products?page={{nextPage}}" class="botones-anterior-siguiente">Siguiente</a>
+    {{/if}}
 </div>
 

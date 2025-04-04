@@ -60,6 +60,18 @@ app.engine('handlebars', engine({
     helpers: {
         eq: function (a, b) {
             return a === b;
+        },
+        multiply: function (a, b) {
+            return a * b;
+        },
+        total: function (products) {
+            if (!Array.isArray(products)) return 0
+            return products.reduce((acc, item) => {
+              if (item.product && item.quantity) {
+                return acc + item.product.price * item.quantity
+              }
+              return acc
+            }, 0)
         }
     }
 }));

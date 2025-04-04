@@ -264,3 +264,6 @@ nav{
     justify-content: center;
     align-items: center;
 }
+.total-carrito{
+    justify-self: end;
+}
