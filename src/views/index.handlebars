@@ -1,3 +1,35 @@
+<nav >
+    <div class="filtros-nav">
+    <h2>Filtrar por:</h2>
+
+    <div class="filtro-categorias">
+        <p>Categoría:</p>
+        <div class="filtros-botones">
+            <a href="/products?category=Electrónica{{#if status}}&status={{status}}{{/if}}">Electrónica</a>
+            <a href="/products?category=Hogar{{#if status}}&status={{status}}{{/if}}">Hogar</a>
+            <a href="/products?category=Deportes{{#if status}}&status={{status}}{{/if}}">Deportes</a>
+            <a href="/products?category=Moda{{#if status}}&status={{status}}{{/if}}">Moda</a>
+            <a href="/products?category=Juguetes{{#if status}}&status={{status}}{{/if}}">Juguetes</a>
+            <a href="/products?category=Electrodomésticos{{#if status}}&status={{status}}{{/if}}">Electrodomésticos</a>
+            <a href="/products?category=Papelería{{#if status}}&status={{status}}{{/if}}">Papelería</a>
+            <a href="/products?category=Computación{{#if status}}&status={{status}}{{/if}}">Computación</a>
+            <a href="/products?category=Belleza{{#if status}}&status={{status}}{{/if}}">Belleza</a>
+            <a href="/products?category=Automotor{{#if status}}&status={{status}}{{/if}}">Automotor</a>
+            <a href="/products{{#if status}}?status={{status}}{{/if}}">Todas</a>
+        </div>
+    </div>
+
+    <div class="filtro-status">
+        <p>Disponibilidad:</p>
+        <div class="filtros-botones">
+            <a href="/products?status=true{{#if category}}&category={{category}}{{/if}}">Disponibles</a>
+            <a href="/products?status=false{{#if category}}&category={{category}}{{/if}}">No disponibles</a>
+            <a href="/products{{#if category}}?category={{category}}{{/if}}">Todos</a>
+        </div>
+    </div>
+  </div>
+</nav>
+
 <h1 class="titulo-div-cards-productos">Productos</h1>
 <div class="div-cards-productos">
 {{#each products}}
@@ -34,3 +66,4 @@
     <a href="/products?page={{nextPage}}" class="botones-anterior-siguiente">Siguiente</a>
   {{/if}}
 </div>
+

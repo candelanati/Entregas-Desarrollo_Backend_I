@@ -50,7 +50,7 @@ body {
 }
 .titulo-div-cards-productos{
     margin-bottom:80px;
-    margin-top: 0px;
+    margin-top: 100px;
 }
 .boton-ver-mas{
     border: 2px;
@@ -111,4 +111,95 @@ body {
     display: flex;
     margin-block: 30px;
     gap: 10px;
+}
+nav{
+    background-color: #f0f0f3a6;
+    backdrop-filter: blur(10px);
+    position: fixed;
+    width: 100vw;
+    margin: 0px !important;
+    padding-bottom: 10px;
+    top: 0px;
+    left: 0px;
+    display: flex;
+    justify-content: center;
+}
+.filtros-nav{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 100px;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    border: 2px;
+    border: #ff3300;
+}
+.filtros-botones{
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+.filtros-nav>h2{
+    color: #10141b;
+    font-size: large;
+    margin-bottom: 0px;
+}
+.filtros-nav>.filtro-status>.filtros-botones>a{
+    color: #10141b;
+    text-decoration: none;
+    background-color: #cfd0d2;
+    border: 1px;
+    border-radius: 0.25rem;
+    padding-inline: 5px;
+    padding-block: 2px;
+    font-size: medium;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
+.filtro-status{
+    width: 300px;
+    overflow: hidden;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.filtros-nav>.filtro-status>p{
+    color: #10141b;
+    font-size: large;
+    margin-bottom: 6px;
+    font-weight: 600;
+}
+.filtro-categorias{
+    width: 600px;
+    overflow: hidden;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    justify-content: center;
+}
+.filtros-nav>.filtro-categorias>.filtros-botones>a{
+    color: #10141b;
+    text-decoration: none;
+    background-color: #cfd0d2;
+    border: 1px;
+    border-radius: 0.25rem;
+    padding-inline: 5px;
+    padding-block: 2px;
+    font-size: medium;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
+.filtros-nav>.filtro-categorias>p{
+    color: #10141b;
+    font-size: large;
+    margin-bottom: 6px;
+    font-weight: 600;
 }
