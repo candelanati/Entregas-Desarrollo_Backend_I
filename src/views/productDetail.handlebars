@@ -8,7 +8,19 @@
     <p>{{producto.description}}</p>
     <p>Categoría: {{producto.category}}</p>
     <p>Precio: ${{producto.price}}</p>
-    <form method="POST" action="/api/carts/:cid/product/{{producto._id}}">
-    <button type="submit" class="agregar-al-carrito-detalle">Agregar al carrito</button>
+    
+    {{!-- activa o desactiva el boton agregar a carrito --}}
+        {{#if producto.status}}
+            <form method="POST" action="/api/carts/:cid/product/{{producto._id}}">
+                <button type="submit" class="agregar-al-carrito-detalle">Agregar al carrito</button>
+            </form>
+        {{else}}
+            <form>
+                <button type="submit" disabled style="background-color: grey; cursor: not-allowed;" class="producto-no-disponible">
+                Producto no disponible
+                </button>
+            </form>
+        {{/if}}
+   
     </form>
 </div>
