@@ -16,26 +16,26 @@ router.get('/products',async(req,res)=>{
 
         let filter = {};
 
-        // Si hay categoría, la agregamos al filtro
+        //categoria
         if (category) {
-            filter.category = category;
+            filter.category = category
         }
 
-        // Si hay estado (true o false), lo agregamos al filtro
+        //disponibilidad
         if (status) {
-            filter.status = status === "true"; // Convertimos string a booleano
+            filter.status = status === "true"
         }
 
-        // Ordenamiento por precio
+        //precio
         let sortOption = {};
         if (sort) {
-            sortOption.price = sort === "asc" ? 1 : -1;
+            sortOption.price = sort === "asc" ? 1 : -1
         }
 
-        // Aplicar paginación, filtros y ordenamiento
+        // paginación, filtros y ordenamiento
         const resultado = await productsModel.paginate(filter, {
             page,
-            limit: 10, // 10 productos por página
+            limit: 10, 
             sort: sortOption,
             lean: true
         });

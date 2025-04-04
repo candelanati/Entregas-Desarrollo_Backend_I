@@ -3,7 +3,13 @@
     <h2>Filtrar por:</h2>
 
     <div class="filtro-categorias">
-        <p>Categoría:</p>
+        
+        <div class="nombre-y-borrar">
+            <p>Categoría:</p>
+            {{#if category}}
+                <a href="/products{{#if status}}?status={{status}}{{/if}}{{#if sort}}{{#unless category}}?{{/unless}}&sort={{sort}}{{/if}}" class="quitar-filtro">Quitar</a>
+            {{/if}}
+        </div>
         <div class="filtros-botones">
             <a href="/products?category=Electrónica{{#if status}}&status={{status}}{{/if}}" class="{{#if category}}{{#if (eq category 'Electrónica')}}selected{{/if}}{{/if}}">Electrónica</a>
             <a href="/products?category=Hogar{{#if status}}&status={{status}}{{/if}}" class="{{#if category}}{{#if (eq category 'Hogar')}}selected{{/if}}{{/if}}">Hogar</a>
@@ -20,11 +26,30 @@
     </div>
 
     <div class="filtro-status">
-        <p>Disponibilidad:</p>
+        <div class="nombre-y-borrar">
+            <p>Disponibilidad:</p>
+            {{#if status}}
+                <a href="/products{{#if category}}?category={{category}}{{/if}}{{#if sort}}{{#unless category}}?{{/unless}}&sort={{sort}}{{/if}}" class="quitar-filtro">Quitar</a>
+            {{/if}}
+        </div>
         <div class="filtros-botones">
             <a href="/products?status=true{{#if category}}&category={{category}}{{/if}}"  class="{{#if status}}{{#if (eq status 'true')}}selected{{/if}}{{/if}}">Disponibles</a>
             <a href="/products?status=false{{#if category}}&category={{category}}{{/if}}" class="{{#if status}}{{#if (eq status 'false')}}selected{{/if}}{{/if}}">No disponibles</a>
             <a href="/products{{#if category}}?category={{category}}{{/if}}" class="{{#unless status}} selected {{/unless}}">Todos</a>
+        </div>
+    </div>
+
+    <div class="filtro-orden">
+        <div class="nombre-y-borrar">
+            <p>Ordenar por precio:</p> 
+            {{#if sort}}
+                <a href="/products{{#if category}}?category={{category}}{{/if}}{{#if status}}{{#unless category}}?{{/unless}}&status={{status}}{{/if}}" class="quitar-filtro">Quitar</a>
+            {{/if}}
+        </div>
+        <div class="filtros-botones">
+            <a href="/products?sort=asc{{#if category}}&category={{category}}{{/if}}{{#if status}}&status={{status}}{{/if}}" class="{{#if (eq sort 'asc')}}selected{{/if}}">Menor a mayor</a>
+            <a href="/products?sort=desc{{#if category}}&category={{category}}{{/if}}{{#if status}}&status={{status}}{{/if}}" class="{{#if (eq sort 'desc')}}selected{{/if}}">Mayor a menor</a>
+            
         </div>
     </div>
   </div>

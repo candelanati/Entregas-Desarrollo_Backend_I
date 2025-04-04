@@ -147,6 +147,7 @@ nav{
     margin-bottom: 0px;
 }
 .filtros-nav>.filtro-status>.filtros-botones>a{
+    margin-top:  10px;
     color: #10141b;
     text-decoration: none;
     background-color: #cfd0d2;
@@ -158,8 +159,9 @@ nav{
     display: flex;
     justify-content: center;
     align-items: center;
-
 }
+
+
 .selected{
     color: #cfd0d2 !important;
     background-color: #10141b !important;
@@ -173,7 +175,7 @@ nav{
     justify-content: center;
     align-items: center;
 }
-.filtros-nav>.filtro-status>p{
+.filtros-nav>.filtro-status>.nombre-y-borrar>p{
     color: #10141b;
     font-size: large;
     margin-bottom: 6px;
@@ -188,6 +190,7 @@ nav{
     justify-content: center;
 }
 .filtros-nav>.filtro-categorias>.filtros-botones>a{
+    margin-top:  10px;
     color: #10141b;
     text-decoration: none;
     background-color: #cfd0d2;
@@ -199,11 +202,64 @@ nav{
     display: flex;
     justify-content: center;
     align-items: center;
-
 }
-.filtros-nav>.filtro-categorias>p{
+
+
+.filtros-nav>.filtro-categorias>.nombre-y-borrar>p{
     color: #10141b;
     font-size: large;
     margin-bottom: 6px;
     font-weight: 600;
+}
+.nombre-y-borrar{
+    display:flex; 
+    flex-direction:row; 
+    justify-content:center;
+    align-items: center;
+    gap: 10px;
+}
+.nombre-y-borrar>p{
+    margin-bottom: 0px;
+}
+.quitar-filtro{
+    background-color:#0172ad;
+    color:#cfd0d2;
+    text-decoration: none;
+    border: 1px;
+    border-radius: 0.25rem;
+    width: 70px;
+    height: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: medium;
+}
+.filtro-orden{
+    width: 300px;
+    overflow: hidden;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.filtros-nav>.filtro-orden>.nombre-y-borrar>p{
+    color: #10141b;
+    font-size: large;
+    margin-bottom: 6px;
+    font-weight: 600;
+}
+.filtros-nav>.filtro-orden>.filtros-botones>a{
+    margin-top:  10px;
+    color: #10141b;
+    text-decoration: none;
+    background-color: #cfd0d2;
+    border: 1px;
+    border-radius: 0.25rem;
+    padding-inline: 5px;
+    padding-block: 2px;
+    font-size: medium;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
