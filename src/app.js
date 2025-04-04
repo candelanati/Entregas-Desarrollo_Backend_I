@@ -28,9 +28,9 @@ app.use(express.static('public'))
 app.use("/api/carts",routerCarts)
 app.use('/',viewsRouter)
 
-app.engine("handlebars", engine())
-app.set("view engine", "handlebars")
-app.set("views","./src/views")
+// // app.engine("handlebars", engine())
+// app.set("view engine", "handlebars")
+// app.set("views","./src/views")
 
 app.get("/", (req, res)=>{
     res.setHeader('Content-Type','text/plain')
@@ -53,6 +53,18 @@ io=new Server(serverHTTP)  //servidor de websocket montado sobre servidor HTTP
      },
      routerProducts
  )
+
+//eq
+// Configuración de Handlebars con el helper `eq`
+app.engine('handlebars', engine({
+    helpers: {
+        eq: function (a, b) {
+            return a === b;
+        }
+    }
+}));
+app.set('view engine', 'handlebars');
+app.set('views', './src/views');
 
 //websockets para realTimeProducts
 io.on("connection", async(socket)=>{

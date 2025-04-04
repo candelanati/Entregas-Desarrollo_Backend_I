@@ -160,6 +160,10 @@ nav{
     align-items: center;
 
 }
+.selected{
+    color: #cfd0d2 !important;
+    background-color: #10141b !important;
+}
 .filtro-status{
     width: 300px;
     overflow: hidden;
